@@ -2,10 +2,25 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import axios from 'axios';
 
-
+interface loginInfoType {
+    employee_number: string;
+    password: string;
+}
 
 const LoginPage = () => {
+    const [loginInfo, setLoginInfo] = useState<loginInfoType>({
+        employee_number: '',
+        password: '',
+    });
 
+    const postLoginInfo = () => {
+        axios.post('https://{BASE_URL}/users/tokens', loginInfo).then((res) => {});
+    };
+
+    const onChangeLoginInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setLoginInfo({ ...loginInfo, [name]: value });
+    };
 
     return (
         <_ModalBackground>
@@ -14,13 +29,13 @@ const LoginPage = () => {
                 <_LoginLine />
                 <_InputLayout>
                     <_InputName>사원번호</_InputName>
-                    <_TestInput  />
+                    <_TestInput name="employeeNumber" onChange={onChangeLoginInfo} />
                 </_InputLayout>
                 <_InputLayout>
                     <_InputName>어드민 번호</_InputName>
-                    <_TestInput  />
+                    <_TestInput name="adminCode" onChange={onChangeLoginInfo} />
                 </_InputLayout>
-                <_LoginButton>로그인</_LoginButton>
+                <_LoginButton onClick={postLoginInfo}>로그인</_LoginButton>
                 <_SearhEmployeeNumberText>
                     사원번호를 잊으셨다면?
                     <_SearhEmployeeNumber>사원번호 찾기</_SearhEmployeeNumber>
