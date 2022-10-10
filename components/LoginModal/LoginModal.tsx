@@ -7,7 +7,7 @@ interface loginInfoType {
     password: string;
 }
 
-const LoginPage = () => {
+const LoginModal = () => {
     const [loginInfo, setLoginInfo] = useState<loginInfoType>({
         employee_number: '',
         password: '',
@@ -37,7 +37,7 @@ const LoginPage = () => {
                 </_InputLayout>
                 <_LoginButton onClick={postLoginInfo}>로그인</_LoginButton>
                 <_SearhEmployeeNumberText>
-                    사원번호를 잊으셨다면?
+                    사원번호를 잊으셨다면?{' '}
                     <_SearhEmployeeNumber>사원번호 찾기</_SearhEmployeeNumber>
                 </_SearhEmployeeNumberText>
             </_LoginLayout>
@@ -52,6 +52,7 @@ const _ModalBackground = styled.div`
     position: absolute;
     width: 100vw;
     height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
 `;
 
 const _LoginLayout = styled.div`
@@ -130,7 +131,8 @@ const _SearhEmployeeNumberText = styled.p`
     color: #5a5a5a;
 `;
 
-const _SearhEmployeeNumber = styled.p`
+const _SearhEmployeeNumber = styled.span`
+    cursor: pointer;
     font-family: 'NanumSquare';
     font-weight: 400;
     font-size: 18px;
@@ -138,4 +140,4 @@ const _SearhEmployeeNumber = styled.p`
     color: #e84045;
 `;
 
-export default LoginPage;
+export default LoginModal;
