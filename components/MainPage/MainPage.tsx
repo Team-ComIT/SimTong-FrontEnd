@@ -37,7 +37,7 @@ const MainPage = () => {
 
 const _PageLayout = styled.div`
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     width: 100vw;
     height: 100vh;
@@ -48,9 +48,13 @@ const _TextLayout = styled.div`
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+    margin-left: 15vw;
 `;
 
-const _ImgBox = styled.div``;
+const _ImgBox = styled.div`
+    width: 800px;
+    margin-right: 5vw;
+`;
 
 const _TextPoint = styled.span`
     color: #e84045;
