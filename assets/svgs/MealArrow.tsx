@@ -6,7 +6,7 @@ interface MealArrowType {
 
 const MealArrow = (props: MealArrowType) => {
     return (
-        <>
+        <div style={{ cursor: 'pointer' }}>
             {props.direction == 'right' ? (
                 <svg
                     width="12"
@@ -32,7 +32,7 @@ const MealArrow = (props: MealArrowType) => {
                     />
                 </svg>
             )}
-        </>
+        </div>
     );
 };
 

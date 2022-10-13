@@ -24,8 +24,6 @@ const MainPage = () => {
                     </_DateBox>
                     <_MenuText>dㅁㅇㅁㅇ</_MenuText>
                     <_MenuText>dㅁㅇㅁㅇ</_MenuText>
-                    <_MenuText>dㅁㅇㅁㅇ</_MenuText>
-                    <_MenuText>dㅁㅇㅁㅇ</_MenuText>
                 </_MealLayout>
             </_TextLayout>
             <_ImgBox>
