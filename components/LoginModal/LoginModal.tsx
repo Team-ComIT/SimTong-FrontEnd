@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import axios from 'axios';
+import { postLoginInfo } from '../../apis/Login';
 
 interface loginInfoType {
     employee_number: string;
@@ -12,10 +12,6 @@ const LoginModal = () => {
         employee_number: '',
         password: '',
     });
-
-    const postLoginInfo = () => {
-        axios.post('https://{BASE_URL}/users/tokens', loginInfo).then((res) => {});
-    };
 
     const onChangeLoginInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -35,7 +31,12 @@ const LoginModal = () => {
                     <_InputName>어드민 번호</_InputName>
                     <_TestInput name="adminCode" onChange={onChangeLoginInfo} />
                 </_InputLayout>
-                <_LoginButton onClick={postLoginInfo}>로그인</_LoginButton>
+                <_LoginButton
+                    onClick={() => {
+                        postLoginInfo(loginInfo);
+                    }}>
+                    로그인
+                </_LoginButton>
                 <_SearhEmployeeNumberText>
                     사원번호를 잊으셨다면?{' '}
                     <_SearhEmployeeNumber>사원번호 찾기</_SearhEmployeeNumber>
@@ -46,12 +47,12 @@ const LoginModal = () => {
 };
 
 const _ModalBackground = styled.div`
+    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     background: rgba(0, 0, 0, 0.6);
 `;
 
