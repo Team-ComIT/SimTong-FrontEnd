@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
+import useInputs from '../../hooks/useInputs';
+import { loginInfoType } from '../../types/authType';
+import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
 import { postLoginInfo } from '../../apis/Login';
 
-interface loginInfoType {
-    employee_number: string;
-    password: string;
-}
-
 const LoginModal = () => {
-    const [loginInfo, setLoginInfo] = useState<loginInfoType>({
+    const [loginInfo, setLoginInfo] = useInputs<loginInfoType>({
         employee_number: '',
         password: '',
     });
-
-    const onChangeLoginInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setLoginInfo({ ...loginInfo, [name]: value });
-    };
+    // const [loginInfo, setLoginInfo] = useState<loginInfoType>({
+    //     employee_number: '',
+    //     password: '',
+    // });
 
     return (
         <_ModalBackground>
@@ -25,18 +22,13 @@ const LoginModal = () => {
                 <_LoginLine />
                 <_InputLayout>
                     <_InputName>사원번호</_InputName>
-                    <_TestInput name="employeeNumber" onChange={onChangeLoginInfo} />
+                    <_TestInput name="employeeNumber" onChange={setLoginInfo} />
                 </_InputLayout>
                 <_InputLayout>
                     <_InputName>어드민 번호</_InputName>
-                    <_TestInput name="adminCode" onChange={onChangeLoginInfo} />
+                    <_TestInput name="adminCode" onChange={setLoginInfo} />
                 </_InputLayout>
-                <_LoginButton
-                    onClick={() => {
-                        postLoginInfo(loginInfo);
-                    }}>
-                    로그인
-                </_LoginButton>
+                <_LoginButton>로그인</_LoginButton>
                 <_SearhEmployeeNumberText>
                     사원번호를 잊으셨다면?{' '}
                     <_SearhEmployeeNumber>사원번호 찾기</_SearhEmployeeNumber>

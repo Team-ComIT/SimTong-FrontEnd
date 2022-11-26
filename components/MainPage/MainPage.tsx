@@ -64,6 +64,7 @@ const _TextTitle = styled.h1`
     font-size: 50px;
     color: #242424;
     margin: 0px;
+    line-height: 40px;
 `;
 
 const _TextSubTitle = styled.h2`
