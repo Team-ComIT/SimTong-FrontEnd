@@ -1,12 +1,10 @@
 import React, { useState, useCallback } from 'react';
 
 const useInput = <T>(initalValue: T) => {
-    // state 정의
-    const [data, setData] = useState<T>(initalValue);
+    const [data, setData] = useState<any>(initalValue);
 
-    // 함수 정의
     const handler = useCallback(
-        (e: any) => {
+        (e: React.ChangeEvent<HTMLInputElement>) => {
             const { value, name } = e.target;
             setData({
                 ...data,

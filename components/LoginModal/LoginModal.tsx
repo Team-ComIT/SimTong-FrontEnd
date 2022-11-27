@@ -3,17 +3,22 @@ import useInputs from '../../hooks/useInputs';
 import { loginInfoType } from '../../types/authType';
 import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
-import { postLoginInfo } from '../../apis/Login';
+import { postLogin } from '../../apis/auth';
 
 const LoginModal = () => {
-    const [loginInfo, setLoginInfo] = useInputs<loginInfoType>({
-        employee_number: '',
+    const [loginInfo, setLoginInfo] = useState<loginInfoType>({
+        employee_number: 0,
         password: '',
     });
-    // const [loginInfo, setLoginInfo] = useState<loginInfoType>({
-    //     employee_number: '',
-    //     password: '',
-    // });
+
+    const changeLoginState = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value, name } = e.target;
+        const insertValue = name == 'employee_number' ? value.replace(/[^0-9]/g, '') : value;
+        setLoginInfo({
+            ...loginInfo,
+            [name]: insertValue,
+        });
+    };
 
     return (
         <_ModalBackground>
@@ -22,11 +27,19 @@ const LoginModal = () => {
                 <_LoginLine />
                 <_InputLayout>
                     <_InputName>사원번호</_InputName>
-                    <_TestInput name="employeeNumber" onChange={setLoginInfo} />
+                    <_TestInput
+                        name="employee_number"
+                        onChange={changeLoginState}
+                        value={loginInfo.employee_number}
+                    />
                 </_InputLayout>
                 <_InputLayout>
                     <_InputName>어드민 번호</_InputName>
-                    <_TestInput name="adminCode" onChange={setLoginInfo} />
+                    <_TestInput
+                        name="password"
+                        onChange={changeLoginState}
+                        value={loginInfo.password}
+                    />
                 </_InputLayout>
                 <_LoginButton>로그인</_LoginButton>
                 <_SearhEmployeeNumberText>
@@ -40,6 +53,7 @@ const LoginModal = () => {
 
 const _ModalBackground = styled.div`
     position: absolute;
+    z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;

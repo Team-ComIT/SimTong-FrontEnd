@@ -1,4 +1,4 @@
 export interface loginInfoType {
-    employee_number: string;
+    employee_number: number;
     password: string;
 }

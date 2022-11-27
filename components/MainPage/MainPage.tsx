@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import LoginModal from '../LoginModal/LoginModal';
 import SimTongApp from '../../assets/imgs/SImTongApp.png';
 import MealArrow from '../../assets/svgs/MealArrow';
 import styled from '@emotion/styled';
@@ -7,6 +8,7 @@ import styled from '@emotion/styled';
 const MainPage = () => {
     return (
         <_PageLayout>
+            <LoginModal />
             <_TextLayout>
                 <_TextTitle>
                     ME<_TextPoint>A</_TextPoint>L
