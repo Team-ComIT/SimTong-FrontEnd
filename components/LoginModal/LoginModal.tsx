@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import useInputs from '../../hooks/useInputs';
+import axios from 'axios';
 import { loginInfoType } from '../../types/authType';
-import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
-import { postLogin } from '../../apis/auth';
 
 const LoginModal = () => {
     const [loginInfo, setLoginInfo] = useState<loginInfoType>({
         employee_number: 0,
         password: '',
     });
+
+    const postLogin = () => {
+        const copyInfo = { ...loginInfo };
+        copyInfo.employee_number as number;
+        axios.post('https://{BASE_URL}/users/tokens', copyInfo).then((res) => {});
+    };
 
     const changeLoginState = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target;
@@ -23,28 +27,23 @@ const LoginModal = () => {
     return (
         <_ModalBackground>
             <_LoginLayout>
-                <_LoginTitle>LOGIN</_LoginTitle>
+                <h1>LOGIN</h1>
                 <_LoginLine />
                 <_InputLayout>
-                    <_InputName>사원번호</_InputName>
-                    <_TestInput
+                    <p>사원번호</p>
+                    <input
                         name="employee_number"
                         onChange={changeLoginState}
                         value={loginInfo.employee_number}
                     />
                 </_InputLayout>
                 <_InputLayout>
-                    <_InputName>어드민 번호</_InputName>
-                    <_TestInput
-                        name="password"
-                        onChange={changeLoginState}
-                        value={loginInfo.password}
-                    />
+                    <p>어드민 번호</p>
+                    <input name="password" onChange={changeLoginState} value={loginInfo.password} />
                 </_InputLayout>
-                <_LoginButton>로그인</_LoginButton>
+                <button onClick={postLogin}>로그인</button>
                 <_SearhEmployeeNumberText>
-                    사원번호를 잊으셨다면?{' '}
-                    <_SearhEmployeeNumber>사원번호 찾기</_SearhEmployeeNumber>
+                    사원번호를 잊으셨다면? <span>사원번호 찾기</span>
                 </_SearhEmployeeNumberText>
             </_LoginLayout>
         </_ModalBackground>
@@ -73,14 +72,33 @@ const _LoginLayout = styled.div`
     width: 540px;
     height: 600px;
     gap: 25px;
-`;
 
-const _LoginTitle = styled.h1`
-    font-family: 'NanumSquare';
-    font-weight: 800;
-    font-size: 32px;
-    color: #e84045;
-    margin: 0px;
+    h1 {
+        font-family: 'NanumSquare';
+        font-weight: 800;
+        font-size: 32px;
+        color: #e84045;
+        margin: 0px;
+    }
+
+    button {
+        cursor: pointer;
+        transition: all 0.3s;
+        width: 400px;
+        height: 42px;
+        background: #242424;
+        border: none;
+        border-radius: 5px;
+        margin-top: 10px;
+        font-family: 'NanumSquare';
+        font-weight: 700;
+        font-size: 16px;
+        color: #ffffff;
+
+        &:hover {
+            background: #111111;
+        }
+    }
 `;
 
 const _LoginLine = styled.div`
@@ -95,39 +113,19 @@ const _InputLayout = styled.div`
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
-`;
 
-const _InputName = styled.p`
-    font-family: 'NanumSquare';
-    font-weight: 700;
-    font-size: 18px;
-    color: #343434;
-    margin: 0px;
-`;
-
-const _TestInput = styled.input`
-    width: 400px;
-    height: 42px;
-    border: 1px solid #d3d3d3;
-    border-radius: 5px;
-`;
-
-const _LoginButton = styled.button`
-    cursor: pointer;
-    transition: all 0.3s;
-    width: 400px;
-    height: 42px;
-    background: #242424;
-    border: none;
-    border-radius: 5px;
-    margin-top: 10px;
-    font-family: 'NanumSquare';
-    font-weight: 700;
-    font-size: 16px;
-    color: #ffffff;
-
-    &:hover {
-        background: #111111;
+    p {
+        font-family: 'NanumSquare';
+        font-weight: 700;
+        font-size: 18px;
+        color: #343434;
+        margin: 0px;
+    }
+    input {
+        width: 400px;
+        height: 42px;
+        border: 1px solid #d3d3d3;
+        border-radius: 5px;
     }
 `;
 
@@ -136,15 +134,14 @@ const _SearhEmployeeNumberText = styled.p`
     font-weight: 400;
     font-size: 18px;
     color: #5a5a5a;
-`;
-
-const _SearhEmployeeNumber = styled.span`
-    cursor: pointer;
-    font-family: 'NanumSquare';
-    font-weight: 400;
-    font-size: 18px;
-    text-decoration-line: underline;
-    color: #e84045;
+    span {
+        cursor: pointer;
+        font-family: 'NanumSquare';
+        font-weight: 400;
+        font-size: 18px;
+        text-decoration-line: underline;
+        color: #e84045;
+    }
 `;
 
 export default LoginModal;
