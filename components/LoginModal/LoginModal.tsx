@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import axios from 'axios';
 import { loginInfoType } from '../../types/authType';
 import styled from '@emotion/styled';
 
 const LoginModal = () => {
+    const router = useRouter();
     const [loginInfo, setLoginInfo] = useState<loginInfoType>({
-        employee_number: 0,
+        employee_number: '',
         password: '',
     });
 
     const postLogin = () => {
-        const copyInfo = { ...loginInfo };
-        copyInfo.employee_number as number;
-        axios.post('https://{BASE_URL}/users/tokens', copyInfo).then((res) => {});
+        let copyInfo = { ...loginInfo };
+        copyInfo.employee_number = parseInt(copyInfo.employee_number as string);
+        axios.post('http://3.39.162.197:8888/users/tokens', copyInfo).then((res) => {
+            router.push('/find-number');
+            console.log(res);
+        });
     };
 
     const changeLoginState = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,11 +39,11 @@ const LoginModal = () => {
                     <input
                         name="employee_number"
                         onChange={changeLoginState}
-                        value={loginInfo.employee_number}
+                        value={loginInfo?.employee_number}
                     />
                 </_InputLayout>
                 <_InputLayout>
-                    <p>어드민 번호</p>
+                    <p>비밀 번호</p>
                     <input name="password" onChange={changeLoginState} value={loginInfo.password} />
                 </_InputLayout>
                 <button onClick={postLogin}>로그인</button>
