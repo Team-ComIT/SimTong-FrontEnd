@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { loginInfoType } from '../../types/authType';
 import styled from '@emotion/styled';
 
-const LoginModal = () => {
+interface propsType {
+    setIsModal: Dispatch<SetStateAction<boolean>>;
+}
+
+const LoginModal = ({ setIsModal }: propsType) => {
     const router = useRouter();
+    const modalRef = useRef<HTMLDivElement | null>(null);
     const [loginInfo, setLoginInfo] = useState<loginInfoType>({
         employee_number: '',
         password: '',
     });
+
+    const closeModal = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (e.currentTarget == modalRef.current) {
+            setIsModal(false);
+        }
+    };
 
     const postLogin = () => {
         let copyInfo = { ...loginInfo };
@@ -30,7 +41,7 @@ const LoginModal = () => {
     };
 
     return (
-        <_ModalBackground>
+        <_ModalBackground onClick={closeModal} ref={modalRef}>
             <_LoginLayout>
                 <h1>LOGIN</h1>
                 <_LoginLine />

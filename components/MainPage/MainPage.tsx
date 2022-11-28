@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import LoginModal from '../LoginModal/LoginModal';
 import SimTongApp from '../../assets/imgs/SImTongApp.png';
@@ -6,9 +6,11 @@ import MealArrow from '../../assets/svgs/MealArrow';
 import styled from '@emotion/styled';
 
 const MainPage = () => {
+    const [isModal, setIsModal] = useState<boolean>(false);
+
     return (
         <_PageLayout>
-            <LoginModal />
+            {isModal && <LoginModal setIsModal={setIsModal} />}
             <_TextLayout>
                 <_TextTitle>
                     ME<_TextPoint>A</_TextPoint>L
