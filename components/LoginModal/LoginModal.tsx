@@ -18,17 +18,24 @@ const LoginModal = ({ setIsModal }: propsType) => {
 
     const closeModal = (e: React.MouseEvent<HTMLDivElement>) => {
         if (e.currentTarget == modalRef.current) {
-            setIsModal(false);
+            setIsModal(true);
         }
     };
 
     const postLogin = () => {
         let copyInfo = { ...loginInfo };
         copyInfo.employee_number = parseInt(copyInfo.employee_number as string);
-        axios.post('http://3.39.162.197:8888/users/tokens', copyInfo).then((res) => {
-            router.push('/find-number');
-            console.log(res);
-        });
+        axios
+            .post('http://3.39.162.197:8888/admins/tokens', copyInfo)
+            .then((res) => {
+                localStorage.setItem('access_token', res.data.access_token);
+                localStorage.setItem('refresh_token', res.data.refresh_token);
+            })
+            .catch((res) => {
+                if (res.response.data.status < 500) {
+                    alert('로그인에 실패했습니다.');
+                }
+            });
     };
 
     const changeLoginState = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,11 +62,17 @@ const LoginModal = ({ setIsModal }: propsType) => {
                 </_InputLayout>
                 <_InputLayout>
                     <p>비밀 번호</p>
-                    <input name="password" onChange={changeLoginState} value={loginInfo.password} />
+                    <input
+                        name="password"
+                        type="password"
+                        onChange={changeLoginState}
+                        value={loginInfo.password}
+                    />
                 </_InputLayout>
                 <button onClick={postLogin}>로그인</button>
                 <_SearhEmployeeNumberText>
-                    사원번호를 잊으셨다면? <span>사원번호 찾기</span>
+                    사원번호를 잊으셨다면?{' '}
+                    <span onClick={() => router.push('/find-number')}>사원번호 찾기</span>
                 </_SearhEmployeeNumberText>
             </_LoginLayout>
         </_ModalBackground>

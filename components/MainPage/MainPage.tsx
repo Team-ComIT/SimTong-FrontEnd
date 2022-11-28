@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { menuType } from '../../types/menuType';
 import LoginModal from '../LoginModal/LoginModal';
 import SimTongApp from '../../assets/imgs/SImTongApp.png';
 import MealArrow from '../../assets/svgs/MealArrow';
 import styled from '@emotion/styled';
 
 const MainPage = () => {
-    const [isModal, setIsModal] = useState<boolean>(false);
+    const [isModal, setIsModal] = useState<boolean>(true);
+    const [menuList, setMenuList] = useState<menuType[]>([]);
 
     return (
         <_PageLayout>
