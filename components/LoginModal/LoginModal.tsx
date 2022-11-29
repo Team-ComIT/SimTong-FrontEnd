@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import useInputs from '../../hooks/useInputs';
 import { loginInfoType } from '../../types/authType';
+import { instance } from '../../apis/instance';
 import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
 import { postLogin } from '../../apis/auth';

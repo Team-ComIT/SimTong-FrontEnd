@@ -1,14 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { menuType } from '../../types/menuType';
-import LoginModal from '../LoginModal/LoginModal';
+import useToDay from '../../hooks/useToDay';
+import { instance } from '../../apis/instance';
 import SimTongApp from '../../assets/imgs/SImTongApp.png';
 import MealArrow from '../../assets/svgs/MealArrow';
 import styled from '@emotion/styled';
 
 const MainPage = () => {
+    const toDay = useToDay();
     const [isModal, setIsModal] = useState<boolean>(true);
     const [menuList, setMenuList] = useState<menuType[]>([]);
+
+    const getMenu = () => {
+        instance
+            .get('/menu', {
+                params: {
+                    date: toDay,
+                },
+            })
+            .then((res) => {
+                console.log(res);
+            });
+    };
+
+    useEffect(() => {
+        getMenu();
+    }, []);
 
     return (
         <_PageLayout>
@@ -24,7 +42,7 @@ const MainPage = () => {
                     <_MealLine />
                     <_DateBox>
                         <MealArrow direction="left" />
-                        <p>2022-03-29</p>
+                        <p>{toDay}</p>
                         <MealArrow direction="right" />
                     </_DateBox>
                     <_MenuText>dㅁㅇㅁㅇ</_MenuText>
