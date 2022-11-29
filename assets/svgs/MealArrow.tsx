@@ -1,19 +1,29 @@
-import React from 'react';
+import React, { SetStateAction, Dispatch } from 'react';
 
 interface MealArrowType {
     direction: 'right' | 'left';
+    datePlusNumber: number;
+    setDatePlusNumber: Dispatch<SetStateAction<number>>;
 }
 
 const MealArrow = (props: MealArrowType) => {
+    const { direction, datePlusNumber, setDatePlusNumber } = props;
+
+    const changeDatePlusNumber = () => {
+        if (direction == 'right') setDatePlusNumber(datePlusNumber + 1);
+        else setDatePlusNumber(datePlusNumber - 1);
+        console.log(datePlusNumber)
+    };
+
     return (
-        <div style={{ cursor: 'pointer' }}>
+        <div onClick={changeDatePlusNumber} style={{ cursor: 'pointer' }}>
             <svg
                 width="12"
                 height="18"
                 viewBox="0 0 12 18"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg">
-                {props.direction == 'right' ? (
+                {direction == 'right' ? (
                     <path
                         d="M0 15.885L7.417 9L0 2.115L2.2834 0L12 9L2.2834 18L0 15.885Z"
                         fill="#242424"

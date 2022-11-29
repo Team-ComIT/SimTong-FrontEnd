@@ -8,9 +8,9 @@ import MealArrow from '../../assets/svgs/MealArrow';
 import styled from '@emotion/styled';
 
 const MainPage = () => {
-    const toDay = useToDay();
-    const [isModal, setIsModal] = useState<boolean>(true);
     const [menuList, setMenuList] = useState<menuType[]>([]);
+    const [datePlusNumber, setDatePlusNumber] = useState<number>(0);
+    const toDay = useToDay(datePlusNumber);
 
     const getMenu = () => {
         instance
@@ -41,9 +41,17 @@ const MainPage = () => {
                     <h3>이번주 점심 메뉴</h3>
                     <_MealLine />
                     <_DateBox>
-                        <MealArrow direction="left" />
+                        <MealArrow
+                            datePlusNumber={datePlusNumber}
+                            setDatePlusNumber={setDatePlusNumber}
+                            direction="left"
+                        />
                         <p>{toDay}</p>
-                        <MealArrow direction="right" />
+                        <MealArrow
+                            datePlusNumber={datePlusNumber}
+                            setDatePlusNumber={setDatePlusNumber}
+                            direction="right"
+                        />
                     </_DateBox>
                     <_MenuText>dㅁㅇㅁㅇ</_MenuText>
                     <_MenuText>dㅁㅇㅁㅇ</_MenuText>
