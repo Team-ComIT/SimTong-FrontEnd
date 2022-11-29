@@ -34,7 +34,8 @@ const LoginModal = ({ setIsModal }: propsType) => {
 
     const changeLoginState = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target;
-        const insertValue = name == 'employee_number' ? value.replace(/[^0-9]/g, '') : value;
+        const insertValue =
+            name == 'employee_number' ? value.replace(/[^0-9]/g, '') : value.replace(/\s| /gi, '');
         setLoginInfo({
             ...loginInfo,
             [name]: insertValue,
