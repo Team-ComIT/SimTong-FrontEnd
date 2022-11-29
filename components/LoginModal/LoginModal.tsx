@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { loginInfoType } from '../../types/authType';
 import styled from '@emotion/styled';
+import OutSideClickHandler from 'react-outside-click-handler';
 
 interface propsType {
     setIsModal: Dispatch<SetStateAction<boolean>>;
@@ -10,17 +11,10 @@ interface propsType {
 
 const LoginModal = ({ setIsModal }: propsType) => {
     const router = useRouter();
-    const modalRef = useRef<HTMLDivElement | null>(null);
     const [loginInfo, setLoginInfo] = useState<loginInfoType>({
         employee_number: '',
         password: '',
     });
-
-    const closeModal = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (e.currentTarget == modalRef.current) {
-            setIsModal(true);
-        }
-    };
 
     const postLogin = () => {
         let copyInfo = { ...loginInfo };
@@ -48,33 +42,35 @@ const LoginModal = ({ setIsModal }: propsType) => {
     };
 
     return (
-        <_ModalBackground onClick={closeModal} ref={modalRef}>
-            <_LoginLayout>
-                <h1>LOGIN</h1>
-                <_LoginLine />
-                <_InputLayout>
-                    <p>사원번호</p>
-                    <input
-                        name="employee_number"
-                        onChange={changeLoginState}
-                        value={loginInfo?.employee_number}
-                    />
-                </_InputLayout>
-                <_InputLayout>
-                    <p>비밀 번호</p>
-                    <input
-                        name="password"
-                        type="password"
-                        onChange={changeLoginState}
-                        value={loginInfo.password}
-                    />
-                </_InputLayout>
-                <button onClick={postLogin}>로그인</button>
-                <_SearhEmployeeNumberText>
-                    사원번호를 잊으셨다면?{' '}
-                    <span onClick={() => router.push('/find-number')}>사원번호 찾기</span>
-                </_SearhEmployeeNumberText>
-            </_LoginLayout>
+        <_ModalBackground>
+            <OutSideClickHandler onOutsideClick={() => setIsModal(false)}>
+                <_LoginLayout>
+                    <h1>LOGIN</h1>
+                    <_LoginLine />
+                    <_InputLayout>
+                        <p>사원번호</p>
+                        <input
+                            name="employee_number"
+                            onChange={changeLoginState}
+                            value={loginInfo?.employee_number}
+                        />
+                    </_InputLayout>
+                    <_InputLayout>
+                        <p>비밀 번호</p>
+                        <input
+                            name="password"
+                            type="password"
+                            onChange={changeLoginState}
+                            value={loginInfo.password}
+                        />
+                    </_InputLayout>
+                    <button onClick={postLogin}>로그인</button>
+                    <_SearhEmployeeNumberText>
+                        사원번호를 잊으셨다면?{' '}
+                        <span onClick={() => router.push('/find-number')}>사원번호 찾기</span>
+                    </_SearhEmployeeNumberText>
+                </_LoginLayout>
+            </OutSideClickHandler>
         </_ModalBackground>
     );
 };
