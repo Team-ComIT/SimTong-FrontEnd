@@ -10,7 +10,7 @@ import styled from '@emotion/styled';
 const MainPage = () => {
     const [menuList, setMenuList] = useState<menuType[]>([]);
     const [datePlusNumber, setDatePlusNumber] = useState<number>(0);
-    const toDay = useToDay(datePlusNumber);
+    const { toDay, numberDate: date } = useToDay(datePlusNumber);
 
     const getMenu = () => {
         instance
@@ -28,6 +28,12 @@ const MainPage = () => {
     useEffect(() => {
         getMenu();
     }, []);
+
+    useEffect(() => {
+        if (date == 1 || date == 30) {
+            getMenu();
+        }
+    }, [date]);
 
     const menuMap = menuList.map((item, index) => {
         if (item.date == toDay) {
