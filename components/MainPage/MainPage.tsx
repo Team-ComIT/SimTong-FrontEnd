@@ -33,6 +33,7 @@ const MainPage = () => {
         if (date == 1 || date == 30) {
             getMenu();
         }
+        console.log(date);
     }, [date]);
 
     const menuMap = menuList.map((item, index) => {
@@ -41,6 +42,8 @@ const MainPage = () => {
             return menuArray.map((item, index) => {
                 return <_MenuText key={index}>{item}</_MenuText>;
             });
+        } else {
+            return undefined;
         }
     });
 
@@ -69,7 +72,11 @@ const MainPage = () => {
                             direction="right"
                         />
                     </_DateBox>
-                    {menuMap || <_MenuText>메뉴가 없습니다</_MenuText>}
+                    {menuMap.filter((element) => element !== undefined).length != 0 ? (
+                        menuMap
+                    ) : (
+                        <_MenuText>메뉴가 없습니다</_MenuText>
+                    )}
                 </_MealLayout>
             </_TextLayout>
             <_ImgBox>
