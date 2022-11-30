@@ -1,9 +1,11 @@
 import React, { useRef, useState, Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/router';
-import axios from 'axios';
-import { loginInfoType } from '../../types/authType';
+import { postLogin } from '../../apis/auth';
+import { loginInfoType, responseType } from '../../types/authType';
+import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
 import OutSideClickHandler from 'react-outside-click-handler';
+import { AxiosError } from 'axios';
 
 interface propsType {
     setIsModal: Dispatch<SetStateAction<boolean>>;
@@ -15,21 +17,22 @@ const LoginModal = ({ setIsModal }: propsType) => {
         employee_number: '',
         password: '',
     });
+    const { mutate } = useMutation(postLogin, {
+        onSuccess: (data: responseType) => {
+            localStorage.setItem('access_token', data.access_token);
+            localStorage.setItem('refresh_token', data.refresh_token);
+        },
+        onError: () => {
+            alert('로그인에 실패했습니다.');
+        },
+    });
 
-    const postLogin = () => {
-        let copyInfo = { ...loginInfo };
-        copyInfo.employee_number = parseInt(copyInfo.employee_number as string);
-        axios
-            .post('http://3.39.162.197:8888/admins/tokens', copyInfo)
-            .then((res) => {
-                localStorage.setItem('access_token', res.data.access_token);
-                localStorage.setItem('refresh_token', res.data.refresh_token);
-            })
-            .catch((res) => {
-                if (res.response.data.status < 500) {
-                    alert('로그인에 실패했습니다.');
-                }
-            });
+    const onLogin = () => {
+        if (loginInfo.employee_number && loginInfo.password) {
+            let copyInfo = { ...loginInfo };
+            copyInfo.employee_number = parseInt(copyInfo.employee_number as string);
+            mutate(copyInfo);
+        }
     };
 
     const changeLoginState = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +68,7 @@ const LoginModal = ({ setIsModal }: propsType) => {
                             value={loginInfo.password}
                         />
                     </_InputLayout>
-                    <button onClick={postLogin}>로그인</button>
+                    <button onClick={onLogin}>로그인</button>
                     <_SearhEmployeeNumberText>
                         사원번호를 잊으셨다면?{' '}
                         <span onClick={() => router.push('/find-number')}>사원번호 찾기</span>
