@@ -12,7 +12,6 @@ const MealArrow = (props: MealArrowType) => {
     const changeDatePlusNumber = () => {
         if (direction == 'right') setDatePlusNumber(datePlusNumber + 1);
         else setDatePlusNumber(datePlusNumber - 1);
-        console.log(datePlusNumber)
     };
 
     return (

@@ -20,13 +20,23 @@ const MainPage = () => {
                 },
             })
             .then((res) => {
-                console.log(res);
-            });
+                setMenuList(res.data.menu);
+            })
+            .catch((res) => {});
     };
 
     useEffect(() => {
         getMenu();
     }, []);
+
+    const menuMap = menuList.map((item, index) => {
+        if (item.date == toDay) {
+            const menuArray = item.meal.split(',');
+            return menuArray.map((item, index) => {
+                return <_MenuText key={index}>{item}</_MenuText>;
+            });
+        }
+    });
 
     return (
         <_PageLayout>
@@ -53,8 +63,7 @@ const MainPage = () => {
                             direction="right"
                         />
                     </_DateBox>
-                    <_MenuText>dㅁㅇㅁㅇ</_MenuText>
-                    <_MenuText>dㅁㅇㅁㅇ</_MenuText>
+                    {menuMap || <_MenuText>메뉴가 없습니다</_MenuText>}
                 </_MealLayout>
             </_TextLayout>
             <_ImgBox>
