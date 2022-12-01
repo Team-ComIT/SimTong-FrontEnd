@@ -23,15 +23,22 @@ const LoginModal = ({ setIsModal }: propsType) => {
             localStorage.setItem('refresh_token', data.refresh_token);
         },
         onError: () => {
-            alert('로그인에 실패했습니다.');
+            alert('로그인에 실패했습니다');
         },
     });
 
     const onLogin = () => {
-        if (loginInfo.employee_number && loginInfo.password) {
+        const { employee_number, password } = loginInfo;
+        if (employee_number && password) {
             let copyInfo = { ...loginInfo };
             copyInfo.employee_number = parseInt(copyInfo.employee_number as string);
             mutate(copyInfo);
+        } else if (employee_number == '' && password) {
+            alert('사원번호를 입력해주세요');
+        } else if (employee_number && password == '') {
+            alert('비밀번호를 입력해주세요');
+        } else {
+            alert('정보를 입력해주세요');
         }
     };
 
