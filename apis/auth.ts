@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { loginInfoType } from '../types/authType';
+import { loginInfoType, responseType } from '../types/authType';
 
-export const postLogin = (info: loginInfoType) => {
-    const copyInfo = { ...info };
-    copyInfo.employee_number as number;
-    return axios.post('https://{BASE_URL}/users/tokens', copyInfo);
+export const postLogin = async (loginInfo: loginInfoType): Promise<responseType> => {
+    const { data } = await axios.post('http://3.39.162.197:8888/admins/tokens', loginInfo);
+    return data;
 };
