@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import useInput from '../hooks/useInputs';
+import { findInfoType } from '../types/findNumberType';
+import { getEmployeeNumber } from '../apis/employeeNumber';
+import { useQuery } from 'react-query';
 import Image from 'next/image';
 import BackGroundImg from '../assets/imgs/BackGroundImg.png';
 import styled from '@emotion/styled';
-
-interface findInfoType {
-    email: string;
-    name: string;
-    workSpace: string;
-}
+import axios from 'axios';
 
 const FindEmployeeNumberPage = () => {
     const [findInfo, setFindInfo] = useInput<findInfoType>({
@@ -16,8 +14,18 @@ const FindEmployeeNumberPage = () => {
         name: '',
         workSpace: '',
     });
+    const { data } = useQuery('employeeNumber', getEmployeeNumber);
 
-    console.log(findInfo);
+    // const getEmployeeNumber = () => {
+    //     axios.get('http://3.39.162.197:8888/commons/employee-number', {
+    //         params: {
+    //             email: findInfo.email,
+    //             name: findInfo.name,
+    //             spotId: findInfo.workSpace,
+    //         },
+    //     });
+    // };
+
     // const [findInfo, setFindInfo] = useState<findInfoType>({ email: '', name: '', workSpace: '' });
 
     return (
@@ -31,11 +39,11 @@ const FindEmployeeNumberPage = () => {
                     <_MainPoint />
                     <_InputLayout>
                         <p>이메일</p>
-                        <input onChange={setFindInfo} name="email" />
+                        <input value={findInfo.email} onChange={setFindInfo} name="email" />
                     </_InputLayout>
                     <_InputLayout>
                         <p>이름</p>
-                        <input onChange={setFindInfo} name="name" />
+                        <input value={findInfo.name} onChange={setFindInfo} name="name" />
                     </_InputLayout>
                     <_InputLayout>
                         <p>근무지</p>
@@ -124,6 +132,7 @@ const _InputLayout = styled.div`
 `;
 
 const _MainButton = styled.button`
+    cursor: pointer;
     padding: 0px 24px 0px 24px;
     height: 42px;
     background: #ed666a;
