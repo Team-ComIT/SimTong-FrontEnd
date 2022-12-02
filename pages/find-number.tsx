@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useInput from '../hooks/useInputs';
 import Image from 'next/image';
 import BackGroundImg from '../assets/imgs/BackGroundImg.png';
 import styled from '@emotion/styled';
@@ -10,11 +11,14 @@ interface findInfoType {
 }
 
 const FindEmployeeNumberPage = () => {
-    const [findInfo, setFindInfo] = useState<findInfoType>({
+    const [findInfo, setFindInfo] = useInput<findInfoType>({
         email: '',
         name: '',
         workSpace: '',
     });
+
+    console.log(findInfo);
+    // const [findInfo, setFindInfo] = useState<findInfoType>({ email: '', name: '', workSpace: '' });
 
     return (
         <_PageBackGround>
@@ -23,19 +27,19 @@ const FindEmployeeNumberPage = () => {
             </_ImgLayout>
             <_MainLayout>
                 <_MainContainer>
-                    <_MainTitle>사원번호 찾기</_MainTitle>
+                    <h1>사원번호 찾기</h1>
                     <_MainPoint />
                     <_InputLayout>
-                        <_InputName>이메일</_InputName>
-                        <_MainInput />
+                        <p>이메일</p>
+                        <input onChange={setFindInfo} name="email" />
                     </_InputLayout>
                     <_InputLayout>
-                        <_InputName>이름</_InputName>
-                        <_MainInput />
+                        <p>이름</p>
+                        <input onChange={setFindInfo} name="name" />
                     </_InputLayout>
                     <_InputLayout>
-                        <_InputName>이메일</_InputName>
-                        <_MainInput />
+                        <p>근무지</p>
+                        <input />
                     </_InputLayout>
                     <_MainButton>사원 번호찾기 요청</_MainButton>
                 </_MainContainer>
@@ -80,14 +84,14 @@ const _MainContainer = styled.div`
     box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     gap: 20px;
-`;
 
-const _MainTitle = styled.h1`
-    font-family: 'NanumSquare';
-    font-weight: 800;
-    font-size: 24px;
-    color: #343434;
-    margin: 0px;
+    h1 {
+        font-family: 'NanumSquare';
+        font-weight: 800;
+        font-size: 24px;
+        color: #343434;
+        margin: 0px;
+    }
 `;
 
 const _MainPoint = styled.div`
@@ -102,21 +106,21 @@ const _InputLayout = styled.div`
     flex-direction: column;
     gap: 15px;
     margin-top: 5px;
-`;
 
-const _InputName = styled.p`
-    font-family: 'NanumSquare';
-    font-weight: 700;
-    font-size: 18px;
-    color: #343434;
-    margin: 0px;
-`;
+    p {
+        font-family: 'NanumSquare';
+        font-weight: 700;
+        font-size: 18px;
+        color: #343434;
+        margin: 0px;
+    }
 
-const _MainInput = styled.input`
-    width: 400px;
-    height: 42px;
-    border: 1px solid #d3d3d3;
-    border-radius: 5px;
+    input {
+        width: 400px;
+        height: 42px;
+        border: 1px solid #d3d3d3;
+        border-radius: 5px;
+    }
 `;
 
 const _MainButton = styled.button`
