@@ -25,8 +25,8 @@ export const showCalendar = (
       <EventBlockDiv
         onClick={() => settingModal(data.start_at)}
         width={`${width}px`}
-        color={`#${data.color}`}
         radius={`${radius}`}
+        color={color[idx % 2]}
         margin={`${margin}px`}>
         {title}
       </EventBlockDiv>
@@ -34,6 +34,8 @@ export const showCalendar = (
       <></>
     );
   };
+
+  const color = ['#E84045', '#505050'];
 
   const cross = (idx: number): boolean | string => {
     for (let i = 0; i < idx; i++) {
@@ -68,10 +70,9 @@ export const showCalendar = (
     return ++cnt;
   };
 
-  const settingModal = (start?: string) => {
+  const settingModal = (start?: string, reset?: boolean) => {
     cnt = 0;
 
-    console.log(start);
     if (!start) {
       setModal(
         modal.map((item: ModalType) =>
@@ -83,13 +84,22 @@ export const showCalendar = (
     } else {
       setModal(
         modal.map((item: ModalType) =>
-          // item.id === parseInt(`${start}`.substr(-2))
           item.id === elm
             ? { ...item, first: !item.first, show: false, start_at: start }
             : { ...item, first: false, show: false, start_at: '' },
         ),
       );
     }
+  };
+
+  const resetModal = () => {
+    setModal(
+      modal.map((item: ModalType) =>
+        item.id === elm
+          ? { ...item, show: false, first: false, start_at: '' }
+          : { ...item, show: false, first: false, start_at: '' },
+      ),
+    );
   };
 
   return (
@@ -147,14 +157,22 @@ export const showCalendar = (
             <>
               {((modal[elm - 1].first && cross(idx) === true) ||
                 (modal[elm - 1].show && cross(idx) !== true)) &&
-              item.start_at ===
+              (item.start_at ===
                 (modal[elm - 1].start_at !== ''
                   ? modal[elm - 1].start_at
                   : `${Day.getYear(month, YEAR)}-${Day.getMonth(month)}-${`${elm}`.padStart(
                       2,
                       '0',
-                    )}`) ? (
-                <ContentDiv color={`#${item.color}`}>
+                    )}`) ||
+                (elm === 1 &&
+                  Day.getperiod(item.start_at) <
+                    Day.getperiod(
+                      `${Day.getYear(month, YEAR)}-${Day.getMonth(month)}-${`${elm}`.padStart(
+                        2,
+                        '0',
+                      )}`,
+                    ))) ? (
+                <ContentDiv color={color[idx % 2]} onClick={() => resetModal()}>
                   <div>{item.title}</div>
                   <div>
                     {item.start_at} ~ {item.end_at}
