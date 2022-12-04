@@ -2,29 +2,25 @@ import React, { useState } from 'react';
 import useInput from '../hooks/useInputs';
 import { findInfoType } from '../types/findNumberType';
 import { getEmployeeNumber } from '../apis/employeeNumber';
-import { useQuery } from 'react-query';
 import Image from 'next/image';
 import BackGroundImg from '../assets/imgs/BackGroundImg.png';
 import styled from '@emotion/styled';
-import axios from 'axios';
+import FindNumber from '../components/FindNumber/FindNumber';
+import { AxiosResponse } from 'axios';
 
 const FindEmployeeNumberPage = () => {
+    const [isResult, setIsResult] = useState<boolean>(false);
+    const [employeeNumber, setEmployeeNumber] = useState<string>('');
     const [findInfo, setFindInfo] = useInput<findInfoType>({
         email: '',
         name: '',
-        workSpace: '',
+        workSpace: '920567c0-815e-4e3c-9c5e-9eb8149893ef',
     });
-    const { data } = useQuery('employeeNumber', getEmployeeNumber);
 
-    // const getEmployeeNumber = () => {
-    //     axios.get('http://3.39.162.197:8888/commons/employee-number', {
-    //         params: {
-    //             email: findInfo.email,
-    //             name: findInfo.name,
-    //             spotId: findInfo.workSpace,
-    //         },
-    //     });
-    // };
+    const then = (res: AxiosResponse) => {
+        setIsResult(true);
+        setEmployeeNumber(res.data.employee_number);
+    };
 
     // const [findInfo, setFindInfo] = useState<findInfoType>({ email: '', name: '', workSpace: '' });
 
@@ -34,23 +30,32 @@ const FindEmployeeNumberPage = () => {
                 <Image src={BackGroundImg} />
             </_ImgLayout>
             <_MainLayout>
-                <_MainContainer>
-                    <h1>사원번호 찾기</h1>
-                    <_MainPoint />
-                    <_InputLayout>
-                        <p>이메일</p>
-                        <input value={findInfo.email} onChange={setFindInfo} name="email" />
-                    </_InputLayout>
-                    <_InputLayout>
-                        <p>이름</p>
-                        <input value={findInfo.name} onChange={setFindInfo} name="name" />
-                    </_InputLayout>
-                    <_InputLayout>
-                        <p>근무지</p>
-                        <input />
-                    </_InputLayout>
-                    <_MainButton>사원 번호찾기 요청</_MainButton>
-                </_MainContainer>
+                {isResult ? (
+                    <FindNumber employeeNumber={employeeNumber} />
+                ) : (
+                    <_MainContainer>
+                        <h1>사원번호 찾기</h1>
+                        <_MainPoint />
+                        <_InputLayout>
+                            <p>이메일</p>
+                            <input value={findInfo.email} onChange={setFindInfo} name="email" />
+                        </_InputLayout>
+                        <_InputLayout>
+                            <p>이름</p>
+                            <input value={findInfo.name} onChange={setFindInfo} name="name" />
+                        </_InputLayout>
+                        <_InputLayout>
+                            <p>근무지</p>
+                            <input />
+                        </_InputLayout>
+                        <_MainButton
+                            onClick={() => {
+                                getEmployeeNumber(findInfo, then);
+                            }}>
+                            사원 번호찾기 요청
+                        </_MainButton>
+                    </_MainContainer>
+                )}
             </_MainLayout>
         </_PageBackGround>
     );
