@@ -13,7 +13,8 @@ const useInput = <T>(initalValue: T) => {
         },
         [data],
     );
-    return [data, handler];
+
+    return [data, setData, handler];
 };
 
 export default useInput;

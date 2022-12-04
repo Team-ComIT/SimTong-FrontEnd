@@ -11,7 +11,7 @@ import { AxiosResponse } from 'axios';
 const FindEmployeeNumberPage = () => {
     const [isResult, setIsResult] = useState<boolean>(false);
     const [employeeNumber, setEmployeeNumber] = useState<string>('');
-    const [findInfo, setFindInfo] = useInput<findInfoType>({
+    const [findInfo, setFindInfo, changeFindInfo] = useInput<findInfoType>({
         email: '',
         name: '',
         workSpace: '920567c0-815e-4e3c-9c5e-9eb8149893ef',
@@ -38,11 +38,11 @@ const FindEmployeeNumberPage = () => {
                         <_MainPoint />
                         <_InputLayout>
                             <p>이메일</p>
-                            <input value={findInfo.email} onChange={setFindInfo} name="email" />
+                            <input value={findInfo.email} onChange={changeFindInfo} name="email" />
                         </_InputLayout>
                         <_InputLayout>
                             <p>이름</p>
-                            <input value={findInfo.name} onChange={setFindInfo} name="name" />
+                            <input value={findInfo.name} onChange={changeFindInfo} name="name" />
                         </_InputLayout>
                         <_InputLayout>
                             <p>근무지</p>

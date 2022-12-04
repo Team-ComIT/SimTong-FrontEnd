@@ -12,7 +12,9 @@ const FindNumber = ({ employeeNumber }: propsType) => {
         <_Wrapper>
             <Image src={Check} />
             <div />
-            <p>사원 번호 {employeeNumber}</p>
+            <p>
+                사원 번호는 <span>{employeeNumber}</span>입니다
+            </p>
         </_Wrapper>
     );
 };
@@ -40,9 +42,13 @@ const _Wrapper = styled.div`
         font-family: 'Pretendard';
         font-style: normal;
         font-weight: 400;
-        font-size: 28px;
+        font-size: 25px;
         color: #343434;
         margin: 0px;
+
+        span {
+            font-weight: 500;
+        }
     }
 `;
 
