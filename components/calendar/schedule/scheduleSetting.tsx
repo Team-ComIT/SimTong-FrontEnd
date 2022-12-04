@@ -2,7 +2,7 @@ import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import axios from 'axios';
 import React, { useState } from 'react';
-import { BASE_URL, Test_TOKEN } from '../../../data';
+import { BASE_URL } from '../../../data';
 import { TODAY } from '../data';
 import { ScheduleSettingType, ScheduleType } from '../type';
 import SelectComplete from './select';
@@ -15,7 +15,7 @@ export const ScheduleSetting = ({ setting, create, initial, getEvent }: Schedule
         id: initial.state.id,
     });
 
-    const changeState = (value: string, props: string) => {
+    const changeState = (value: string, props: string): void => {
         setSchedule({
             ...schedule,
             [props]: value,
@@ -30,6 +30,7 @@ export const ScheduleSetting = ({ setting, create, initial, getEvent }: Schedule
                 <input
                     value={schedule.title}
                     placeholder="제목을 입력해주세요."
+                    maxLength={20}
                     onChange={(e) => changeState(e.target.value, 'title')}
                 />
             ),
@@ -78,7 +79,7 @@ export const ScheduleSetting = ({ setting, create, initial, getEvent }: Schedule
                 method: 'PUT',
                 url: BASE_URL + `/schedules/spots/${initial.state.id}`,
                 headers: {
-                    Authorization: `Bearer ${Test_TOKEN}`,
+                    Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
                 },
                 data: {
                     title: schedule.title,
@@ -94,7 +95,7 @@ export const ScheduleSetting = ({ setting, create, initial, getEvent }: Schedule
                 method: 'POST',
                 url: BASE_URL + `/schedules/spots/${schedule.id}`,
                 headers: {
-                    Authorization: `Bearer ${Test_TOKEN}`,
+                    Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
                 },
                 data: {
                     title: schedule.title,

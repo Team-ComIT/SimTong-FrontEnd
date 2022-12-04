@@ -2,9 +2,9 @@ import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import axios from 'axios';
 import React, { useState } from 'react';
-import { BASE_URL, Test_TOKEN } from '../../../data';
+import { BASE_URL } from '../../../data';
 import { TODAY } from '../data';
-import { AllScheduleType } from '../type';
+import { AllScheduleType, EventType } from '../type';
 
 const FadeInStart = keyframes`
   0% {
@@ -32,7 +32,7 @@ export const AllSchedule = ({ setting, create, initial, getEvent, event }: AllSc
             method: 'DELETE',
             url: BASE_URL + `/schedules/spots/${hover}`,
             headers: {
-                Authorization: `Bearer ${Test_TOKEN}`,
+                Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
             },
         }).then(() => {
             getEvent();
@@ -41,7 +41,7 @@ export const AllSchedule = ({ setting, create, initial, getEvent, event }: AllSc
         });
     };
 
-    const settingInitial = (elm: any) => {
+    const settingInitial = (elm: EventType) => {
         initial.setState({
             title: elm.title,
             start_at: elm.start_at,
@@ -71,7 +71,7 @@ export const AllSchedule = ({ setting, create, initial, getEvent, event }: AllSc
                 </div>
                 <span>
                     <ScheduleList>
-                        {event.map((elm: any, i: number) => (
+                        {event.map((elm: EventType, i: number) => (
                             <div
                                 onClick={() => {
                                     setting.setState(!setting.state);
@@ -82,7 +82,7 @@ export const AllSchedule = ({ setting, create, initial, getEvent, event }: AllSc
                                 <p>
                                     <span>{elm.title}</span>
                                     <br />
-                                    <span style={{ fontSize: '16px' }}>{elm.content}</span>
+                                    {/* <span style={{ fontSize: '16px' }}>{elm.content}</span> */}
                                 </p>
                                 <Start animation={hover === elm.id ? FadeInStart : FadeOutStart}>
                                     <span>{elm.start_at}</span>
@@ -106,7 +106,7 @@ const FadeInBtn = keyframes`
   }
 `;
 
-const Start = styled.div<{ animation: any }>`
+const Start = styled.div<{ animation: string }>`
     width: 120px;
     display: inline-flex;
     align-items: center;

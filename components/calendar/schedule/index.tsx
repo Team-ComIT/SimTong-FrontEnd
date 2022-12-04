@@ -1,8 +1,4 @@
-import styled from '@emotion/styled';
-import { propsToAttrMap } from '@vue/shared';
-import axios from 'axios';
 import React, { useState } from 'react';
-import { BASE_URL, Test_TOKEN } from '../../../data';
 import { TODAY } from '../data';
 import { EventType, ScheduleType } from '../type';
 import { AllSchedule } from './allSchedule';
