@@ -72,11 +72,13 @@ const MainPage = () => {
                             direction="right"
                         />
                     </_DateBox>
-                    {menuMap.filter((element) => element !== undefined).length != 0 ? (
-                        menuMap
-                    ) : (
-                        <_MenuText>메뉴가 없습니다</_MenuText>
-                    )}
+                    <_MenuLayout>
+                        {menuMap.filter((element) => element !== undefined).length != 0 ? (
+                            menuMap
+                        ) : (
+                            <_MenuText>메뉴가 없습니다</_MenuText>
+                        )}
+                    </_MenuLayout>
                 </_MealLayout>
             </_TextLayout>
             <_ImgBox>
@@ -163,6 +165,14 @@ const _DateBox = styled.div`
         color: #242424;
         margin: 0px;
     }
+`;
+
+const _MenuLayout = styled.div`
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 200px;
 `;
 
 const _MenuText = styled.p`
