@@ -2,11 +2,17 @@ export interface EventType {
     start_at: string;
     end_at: string;
     title: string;
-    content: string;
+    id: string;
     spot: {
         id: string;
         name: string;
     };
+}
+
+export interface SpotType {
+    id: string;
+    name: string;
+    location: string;
 }
 
 export interface ModalType {
