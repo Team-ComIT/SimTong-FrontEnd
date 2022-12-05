@@ -72,8 +72,13 @@ const MainPage = () => {
                             direction="right"
                         />
                     </_DateBox>
-                    <_MenuText>dㅁㅇㅁㅇ</_MenuText>
-                    <_MenuText>dㅁㅇㅁㅇ</_MenuText>
+                    <_MenuLayout>
+                        {menuMap.filter((element) => element !== undefined).length != 0 ? (
+                            menuMap
+                        ) : (
+                            <_MenuText>메뉴가 없습니다</_MenuText>
+                        )}
+                    </_MenuLayout>
                 </_MealLayout>
             </_TextLayout>
             <_ImgBox>
