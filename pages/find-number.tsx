@@ -3,22 +3,16 @@ import useInput from '../hooks/useInputs';
 import { findInfoType } from '../types/findNumberType';
 import { getEmployeeNumber, getWorkspace } from '../apis/employeeNumber';
 import { useQuery } from 'react-query';
+import Workspace from '../components/FindNumber/Workspace';
 import Image from 'next/image';
 import BackGroundImg from '../assets/imgs/BackGroundImg.png';
 import styled from '@emotion/styled';
 import FindNumber from '../components/FindNumber/FindNumber';
 import { AxiosResponse } from 'axios';
 
-interface workSpaceType {
-    id: string;
-    name: string;
-    location: string;
-}
-
 interface selectStateType {
     isShow: boolean;
     select: string;
-    arr: workSpaceType[];
 }
 
 const FindEmployeeNumberPage = () => {
@@ -28,13 +22,20 @@ const FindEmployeeNumberPage = () => {
     const [selectState, setSelectState] = useState<selectStateType>({
         isShow: false,
         select: '근무지를 선택해주세요',
-        arr: [...data?.data.spot_list],
     });
     const [findInfo, setFindInfo, changeFindInfo] = useInput<findInfoType>({
         email: '',
         name: '',
-        workSpace: '920567c0-815e-4e3c-9c5e-9eb8149893ef',
+        workspace: '920567c0-815e-4e3c-9c5e-9eb8149893ef',
     });
+
+    const setSelect = (select: string) => {
+        setSelectState({ isShow: false, select: select });
+    };
+
+    const setWorkspace = (uuid: string) => {
+        setFindInfo({ ...findInfo, workspace: uuid });
+    };
 
     const then = (res: AxiosResponse) => {
         setIsResult(true);
@@ -70,11 +71,18 @@ const FindEmployeeNumberPage = () => {
                             <_SelectBox>
                                 <input value={selectState.select} onClick={showWorkspace} />
                                 {selectState.isShow && (
-                                    <_Workspace>
-                                        {selectState.arr.map((item, index) => {
-                                            return <div>{}</div>;
+                                    <_WorkspaceLayout>
+                                        {data?.data.spot_list.map((item: any, index: number) => {
+                                            return (
+                                                <Workspace
+                                                    key={index}
+                                                    item={item}
+                                                    setWorkspace={setWorkspace}
+                                                    setSelect={setSelect}
+                                                />
+                                            );
                                         })}
-                                    </_Workspace>
+                                    </_WorkspaceLayout>
                                 )}
                             </_SelectBox>
                         </_InputLayout>
@@ -177,7 +185,7 @@ const _SelectBox = styled.div`
     align-items: center;
 `;
 
-const _Workspace = styled.div`
+const _WorkspaceLayout = styled.div`
     -ms-overflow-style: none;
     display: flex;
     flex-direction: column;
@@ -194,18 +202,6 @@ const _Workspace = styled.div`
 
     &::-webkit-scrollbar {
         display: none;
-    }
-
-    div {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        height: 40px;
-        padding-left: 20px;
-        font-family: 'NanumSquareF';
-        font-weight: 700;
-        font-size: 14px;
-        color: #242424;
     }
 `;
 
