@@ -15,3 +15,7 @@ export const getEmployeeNumber = (params: findInfoType, then: (res: AxiosRespons
             console.log(res);
         });
 };
+
+export const getWorkspace = () => {
+    return axios.get('http://3.39.162.197:8888/commons/spot');
+};

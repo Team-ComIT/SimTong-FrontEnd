@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import useInput from '../hooks/useInputs';
 import { findInfoType } from '../types/findNumberType';
-import { getEmployeeNumber } from '../apis/employeeNumber';
+import { getEmployeeNumber, getWorkspace } from '../apis/employeeNumber';
+import { useQuery } from 'react-query';
 import Image from 'next/image';
 import BackGroundImg from '../assets/imgs/BackGroundImg.png';
 import styled from '@emotion/styled';
@@ -21,12 +22,13 @@ interface selectStateType {
 }
 
 const FindEmployeeNumberPage = () => {
+    const { data } = useQuery('spot_list', getWorkspace);
     const [isResult, setIsResult] = useState<boolean>(false);
     const [employeeNumber, setEmployeeNumber] = useState<string>('');
     const [selectState, setSelectState] = useState<selectStateType>({
         isShow: false,
-        select: '근무지',
-        arr: [],
+        select: '근무지를 선택해주세요',
+        arr: [...data?.data.spot_list],
     });
     const [findInfo, setFindInfo, changeFindInfo] = useInput<findInfoType>({
         email: '',
@@ -39,7 +41,9 @@ const FindEmployeeNumberPage = () => {
         setEmployeeNumber(res.data.employee_number);
     };
 
-    // const [findInfo, setFindInfo] = useState<findInfoType>({ email: '', name: '', workSpace: '' });
+    const showWorkspace = () => {
+        setSelectState({ ...selectState, isShow: !selectState.isShow });
+    };
 
     return (
         <_PageBackGround>
@@ -63,16 +67,16 @@ const FindEmployeeNumberPage = () => {
                         </_InputLayout>
                         <_InputLayout>
                             <p>근무지</p>
-                            {selectState.isShow ? (
-                                <_SelectBox>
-                                    <input />
+                            <_SelectBox>
+                                <input value={selectState.select} onClick={showWorkspace} />
+                                {selectState.isShow && (
                                     <_Workspace>
-                                        <div>은행동 본점</div>
+                                        {selectState.arr.map((item, index) => {
+                                            return <div>{}</div>;
+                                        })}
                                     </_Workspace>
-                                </_SelectBox>
-                            ) : (
-                                <input />
-                            )}
+                                )}
+                            </_SelectBox>
                         </_InputLayout>
                         <_MainButton
                             onClick={() => {
