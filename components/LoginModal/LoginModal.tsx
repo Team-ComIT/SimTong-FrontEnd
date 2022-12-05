@@ -1,7 +1,7 @@
-import React, { useRef, useState, Dispatch, SetStateAction } from 'react';
-import { useRouter } from 'next/router';
-import { postLogin } from '../../apis/auth';
-import { loginInfoType, responseType } from '../../types/authType';
+import React, { useState } from 'react';
+import useInputs from '../../hooks/useInputs';
+import { loginInfoType } from '../../types/authType';
+import { instance } from '../../apis/instance';
 import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
 import OutSideClickHandler from 'react-outside-click-handler';

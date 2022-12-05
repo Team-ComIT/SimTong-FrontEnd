@@ -1,18 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { menuType } from '../../types/menuType';
-import LoginModal from '../LoginModal/LoginModal';
+import useToDay from '../../hooks/useToDay';
+import { instance } from '../../apis/instance';
 import SimTongApp from '../../assets/imgs/SImTongApp.png';
 import MealArrow from '../../assets/svgs/MealArrow';
 import styled from '@emotion/styled';
 
 const MainPage = () => {
-    const [isModal, setIsModal] = useState<boolean>(true);
     const [menuList, setMenuList] = useState<menuType[]>([]);
+    const [datePlusNumber, setDatePlusNumber] = useState<number>(0);
+    const { toDay, numberDate: date } = useToDay(datePlusNumber);
+
+    const getMenu = () => {
+        instance
+            .get('/menu', {
+                params: {
+                    date: toDay,
+                },
+            })
+            .then((res) => {
+                setMenuList(res.data.menu);
+            })
+            .catch((res) => {});
+    };
+
+    useEffect(() => {
+        getMenu();
+    }, []);
+
+    useEffect(() => {
+        if (date == 1 || date == 30) {
+            getMenu();
+        }
+        console.log(date);
+    }, [date]);
+
+    const menuMap = menuList.map((item, index) => {
+        if (item.date == toDay) {
+            const menuArray = item.meal.split(',');
+            return menuArray.map((item, index) => {
+                return <_MenuText key={index}>{item}</_MenuText>;
+            });
+        } else {
+            return undefined;
+        }
+    });
 
     return (
         <_PageLayout>
-            {isModal && <LoginModal setIsModal={setIsModal} />}
             <_TextLayout>
                 <h1>
                     ME<span>A</span>L
@@ -24,9 +60,17 @@ const MainPage = () => {
                     <h3>이번주 점심 메뉴</h3>
                     <_MealLine />
                     <_DateBox>
-                        <MealArrow direction="left" />
-                        <p>2022-03-29</p>
-                        <MealArrow direction="right" />
+                        <MealArrow
+                            datePlusNumber={datePlusNumber}
+                            setDatePlusNumber={setDatePlusNumber}
+                            direction="left"
+                        />
+                        <p>{toDay}</p>
+                        <MealArrow
+                            datePlusNumber={datePlusNumber}
+                            setDatePlusNumber={setDatePlusNumber}
+                            direction="right"
+                        />
                     </_DateBox>
                     <_MenuText>dㅁㅇㅁㅇ</_MenuText>
                     <_MenuText>dㅁㅇㅁㅇ</_MenuText>
@@ -116,6 +160,14 @@ const _DateBox = styled.div`
         color: #242424;
         margin: 0px;
     }
+`;
+
+const _MenuLayout = styled.div`
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 200px;
 `;
 
 const _MenuText = styled.p`
