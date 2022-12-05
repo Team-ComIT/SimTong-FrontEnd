@@ -8,9 +8,26 @@ import styled from '@emotion/styled';
 import FindNumber from '../components/FindNumber/FindNumber';
 import { AxiosResponse } from 'axios';
 
+interface workSpaceType {
+    id: string;
+    name: string;
+    location: string;
+}
+
+interface selectStateType {
+    isShow: boolean;
+    select: string;
+    arr: workSpaceType[];
+}
+
 const FindEmployeeNumberPage = () => {
     const [isResult, setIsResult] = useState<boolean>(false);
     const [employeeNumber, setEmployeeNumber] = useState<string>('');
+    const [selectState, setSelectState] = useState<selectStateType>({
+        isShow: false,
+        select: '근무지',
+        arr: [],
+    });
     const [findInfo, setFindInfo, changeFindInfo] = useInput<findInfoType>({
         email: '',
         name: '',
@@ -46,7 +63,16 @@ const FindEmployeeNumberPage = () => {
                         </_InputLayout>
                         <_InputLayout>
                             <p>근무지</p>
-                            <input />
+                            {selectState.isShow ? (
+                                <_SelectBox>
+                                    <input />
+                                    <_Workspace>
+                                        <div>은행동 본점</div>
+                                    </_Workspace>
+                                </_SelectBox>
+                            ) : (
+                                <input />
+                            )}
                         </_InputLayout>
                         <_MainButton
                             onClick={() => {
@@ -129,10 +155,53 @@ const _InputLayout = styled.div`
     }
 
     input {
+        cursor: pointer;
         width: 400px;
         height: 42px;
         border: 1px solid #d3d3d3;
         border-radius: 5px;
+    }
+`;
+
+const _SelectBox = styled.div`
+    position: relative;
+    overflow: visible;
+    width: 400px;
+    height: 42px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+const _Workspace = styled.div`
+    -ms-overflow-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    z-index: 1;
+    position: absolute;
+    top: 50px;
+    width: 400px;
+    height: 100px;
+    background-color: #ffffff;
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    div {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 40px;
+        padding-left: 20px;
+        font-family: 'NanumSquareF';
+        font-weight: 700;
+        font-size: 14px;
+        color: #242424;
     }
 `;
 
