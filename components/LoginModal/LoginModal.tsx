@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import useInputs from '../../hooks/useInputs';
-import { loginInfoType } from '../../types/authType';
-import { instance } from '../../apis/instance';
+import React, { useState, Dispatch, SetStateAction } from 'react';
+import { useRouter } from 'next/router';
+import { loginInfoType, responseType } from '../../types/authType';
+import { postLogin } from '../../apis/auth';
 import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
 import OutSideClickHandler from 'react-outside-click-handler';
-import { AxiosError } from 'axios';
 
 interface propsType {
     setIsModal: Dispatch<SetStateAction<boolean>>;
