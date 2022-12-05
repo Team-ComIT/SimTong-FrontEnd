@@ -1,14 +1,14 @@
 import '../styles/globals.css';
 import { Provider } from 'react-redux';
-import type { AppProps } from 'next/app';
 import { QueryClientProvider, QueryClient } from 'react-query';
+import type { AppProps } from 'next/app';
 import { store } from '../store/store';
 
 function MyApp({ Component, pageProps }: AppProps) {
-    const queryClient = new QueryClient();
+    const queryclient = new QueryClient();
 
     return (
-        <QueryClientProvider client={queryClient}>
+        <QueryClientProvider client={queryclient}>
             <Provider store={store}>
                 <Component {...pageProps} />
             </Provider>
