@@ -5,11 +5,21 @@ import { useSelector } from 'react-redux';
 import Logo from '../../assets/svgs/Logo';
 import LoginModal from '../LoginModal/LoginModal';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useAppSelector } from '../../hook/hooks';
+
+interface navType {
+    name: string;
+    link: string;
+}
 
 const Header = () => {
     const [isModal, setIsModal] = useState<boolean>(false);
-    const nav: string[] = ['HOME', '휴무표', '사원 관리', '캘린더'];
+    const nav: navType[] = [
+        { name: '휴무표', link: '/' },
+        { name: '사원관리', link: '/' },
+        { name: '캘린더', link: '/calender' },
+    ];
 
     const login = useAppSelector((state) => state.login.loggedIn);
 
@@ -21,8 +31,10 @@ const Header = () => {
                     <Logo />
                 </LogoBox>
                 <Nav>
-                    {nav.map((str: string) => (
-                        <span>{str}</span>
+                    {nav.map((item: navType, index: number) => (
+                        <Link href={item.link} key={index}>
+                            <span>{item.name}</span>
+                        </Link>
                     ))}
                 </Nav>
                 <Profile>
@@ -64,6 +76,20 @@ const Nav = styled.div`
     gap: 100px;
     display: inline-flex;
     justify-content: space-between;
+
+    span {
+        transition: all 0.2s;
+        cursor: pointer;
+        font-family: 'Pretendard';
+        font-weight: 400;
+        font-size: 18px;
+        color: #242424;
+
+        &:hover {
+            font-weight: 600;
+            color: #e84045;
+        }
+    }
 `;
 
 const Profile = styled.div`
