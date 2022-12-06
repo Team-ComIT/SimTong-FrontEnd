@@ -26,7 +26,7 @@ const FindEmployeeNumberPage = () => {
     const [findInfo, setFindInfo, changeFindInfo] = useInput<findInfoType>({
         email: '',
         name: '',
-        workspace: '920567c0-815e-4e3c-9c5e-9eb8149893ef',
+        workspace: '',
     });
 
     const setSelect = (select: string) => {
@@ -34,6 +34,7 @@ const FindEmployeeNumberPage = () => {
     };
 
     const setWorkspace = (uuid: string) => {
+        console.log(uuid);
         setFindInfo({ ...findInfo, workspace: uuid });
     };
 

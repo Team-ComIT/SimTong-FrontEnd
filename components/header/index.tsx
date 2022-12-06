@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
 // import Profile from '../../assets/svgs/Profile.svg';
+import { useRouter } from 'next/router';
 import Logo from '../../assets/svgs/Logo';
 import LoginModal from '../LoginModal/LoginModal';
 import Image from 'next/image';
@@ -14,6 +15,7 @@ interface navType {
 }
 
 const Header = () => {
+    const router = useRouter();
     const [isModal, setIsModal] = useState<boolean>(false);
     const nav: navType[] = [
         { name: '휴무표', link: '/' },
@@ -27,44 +29,46 @@ const Header = () => {
 
     const login = useAppSelector((state) => state.login.loggedIn);
 
-    if (window.location.pathname != '/find-number') {
-        return (
-            <>
-                <MainDiv>
-                    {isModal && <LoginModal showModal={showModal} />}{' '}
-                    <Link href="/">
-                        <LogoBox>
-                            <Logo />
-                        </LogoBox>
-                    </Link>
-                    <Nav>
-                        {nav.map((item: navType, index: number) => (
-                            <Link href={item.link} key={index}>
-                                <span>{item.name}</span>
-                            </Link>
-                        ))}
-                    </Nav>
-                    <Profile>
-                        {login ? (
-                            <>
-                                <ProfileImage>
-                                    <Image
-                                        src={require('../../public/profile.png')}
-                                        width="30px"
-                                        height="30px"
-                                    />
-                                </ProfileImage>
-
-                                <LogOut>로그아웃</LogOut>
-                            </>
-                        ) : (
-                            <LoginBtn onClick={showModal}>로그인</LoginBtn>
-                        )}
-                    </Profile>
-                </MainDiv>
-            </>
-        );
+    if (router.pathname == '/find-number') {
+        return <div></div>;
     }
+
+    return (
+        <>
+            <MainDiv>
+                {isModal && <LoginModal showModal={showModal} />}{' '}
+                <Link href="/">
+                    <LogoBox>
+                        <Logo />
+                    </LogoBox>
+                </Link>
+                <Nav>
+                    {nav.map((item: navType, index: number) => (
+                        <Link href={item.link} key={index}>
+                            <span>{item.name}</span>
+                        </Link>
+                    ))}
+                </Nav>
+                <Profile>
+                    {login ? (
+                        <>
+                            <ProfileImage>
+                                <Image
+                                    src={require('../../public/profile.png')}
+                                    width="30px"
+                                    height="30px"
+                                />
+                            </ProfileImage>
+
+                            <LogOut>로그아웃</LogOut>
+                        </>
+                    ) : (
+                        <LoginBtn onClick={showModal}>로그인</LoginBtn>
+                    )}
+                </Profile>
+            </MainDiv>
+        </>
+    );
 };
 
 export default Header;
