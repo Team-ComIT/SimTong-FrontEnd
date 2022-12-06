@@ -53,7 +53,6 @@ const Header = () => {
                                     height="30px"
                                 />
                             </ProfileImage>
-                            <span>성심당 은행동 본점</span>
                             <LogOut>로그아웃</LogOut>
                         </>
                     ) : (
