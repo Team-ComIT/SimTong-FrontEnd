@@ -1,25 +1,28 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/router';
-import { loginInfoType, responseType } from '../../types/authType';
+import { loginInfoType } from '../../types/authType';
 import { postLogin } from '../../apis/auth';
 import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
 import OutSideClickHandler from 'react-outside-click-handler';
 
 interface propsType {
-    setIsModal: Dispatch<SetStateAction<boolean>>;
+    showModal: () => void;
 }
 
-const LoginModal = ({ setIsModal }: propsType) => {
+const LoginModal = ({ showModal }: propsType) => {
     const router = useRouter();
     const [loginInfo, setLoginInfo] = useState<loginInfoType>({
         employee_number: '',
         password: '',
     });
+
     const { mutate } = useMutation(postLogin, {
-        onSuccess: (data: responseType) => {
+        onSuccess: (data) => {
             localStorage.setItem('access_token', data.access_token);
             localStorage.setItem('refresh_token', data.refresh_token);
+            location.reload();
+            showModal();
         },
         onError: () => {
             alert('로그인에 실패했습니다');
@@ -41,6 +44,11 @@ const LoginModal = ({ setIsModal }: propsType) => {
         }
     };
 
+    const onClickFindNumber = () => {
+        router.push('/find-number');
+        showModal();
+    };
+
     const changeLoginState = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target;
         const insertValue =
@@ -53,7 +61,7 @@ const LoginModal = ({ setIsModal }: propsType) => {
 
     return (
         <_ModalBackground>
-            <OutSideClickHandler onOutsideClick={() => setIsModal(false)}>
+            <OutSideClickHandler onOutsideClick={showModal}>
                 <_LoginLayout>
                     <h1>LOGIN</h1>
                     <_LoginLine />
@@ -77,7 +85,7 @@ const LoginModal = ({ setIsModal }: propsType) => {
                     <button onClick={onLogin}>로그인</button>
                     <_SearhEmployeeNumberText>
                         사원번호를 잊으셨다면?{' '}
-                        <span onClick={() => router.push('/find-number')}>사원번호 찾기</span>
+                        <span onClick={onClickFindNumber}>사원번호 찾기</span>
                     </_SearhEmployeeNumberText>
                 </_LoginLayout>
             </OutSideClickHandler>

@@ -17,4 +17,5 @@ function MyApp({ Component, pageProps }: AppProps) {
         </QueryClientProvider>
     );
 }
+
 export default MyApp;
