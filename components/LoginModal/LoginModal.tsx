@@ -87,6 +87,8 @@ const LoginModal = ({ setIsModal }: propsType) => {
 
 const _ModalBackground = styled.div`
     position: absolute;
+    top: 0px;
+    left: 0px;
     z-index: 1;
     display: flex;
     justify-content: center;
