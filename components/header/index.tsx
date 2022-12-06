@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
+// import Profile from '../../assets/svgs/Profile.svg';
+// import Logo from '../../assets/svgs/Logo.svg';
 import LoginModal from '../LoginModal/LoginModal';
 import Image from 'next/image';
 import { useAppSelector } from '../../hook/hooks';
@@ -17,7 +19,7 @@ const Header = () => {
                 {isModal && <LoginModal setIsModal={setIsModal} />}
                 <Logo>
                     <LogoImg />
-                    <Image src={require('../../public/logo.png')} width="108px" height="45px" />
+                    <Image src="../../assets/svgs/Logo.svg" />
                 </Logo>
                 <Nav>
                     {nav.map((str: string) => (
@@ -49,12 +51,12 @@ const Header = () => {
 export default Header;
 
 const MainDiv = styled.div`
-    width: 99vw;
+    width: 100vw;
+    overflow: hidden;
     height: 60px;
     display: inline-flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 160px 0 340px;
+    justify-content: space-evenly;
     border-bottom: 1px solid #ededed;
 `;
 

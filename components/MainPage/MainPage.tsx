@@ -93,6 +93,7 @@ const _PageLayout = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 100vw;
+    overflow: hidden;
     height: 100vh;
 `;
 
