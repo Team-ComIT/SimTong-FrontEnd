@@ -4,8 +4,12 @@ import axios from 'axios';
 import { showCalendar } from './calendar';
 import * as GetDay from './func';
 import { EventType, ModalType } from './type';
-import { showHolyday } from './holyday';
+// import { showHolyday } from './holyday';
 import { Schedule } from './schedule';
+import Week from './week';
+import Dates from './dates';
+import { keyframes } from '@emotion/react';
+import { TODAY } from './data';
 
 const Calendar = () => {
     let DATE: Date = new Date();
@@ -47,28 +51,26 @@ const Calendar = () => {
                 };
             }),
         );
-    }, [month]);
-
-    useEffect(() => {
         getEvent();
-        setEvent(
-            event.sort(function (a: EventType, b: EventType) {
-                return GetDay.getperiod(a.start_at) - GetDay.getperiod(b.start_at);
-            }),
-        );
-    });
+    }, [month]);
 
     const getEvent = () => {
         axios({
-            url: 'http://3.39.162.197:8888/schedule/spots',
+            url: 'http://3.39.162.197:8888/schedules/spots',
             method: 'GET',
+            params: {
+                date: `${TODAY}`,
+            },
             headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json;charset=UTF-8',
-                Authorization: `Bearer ${'b2iidkkdiskejfjv.dsjseilsjdlfe.tokaaweolfskeioswldkeosl'}`,
+                Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
             },
         }).then((res) => {
             console.log(res);
+            setEvent(
+                res.data.schedules.sort(function (a: EventType, b: EventType) {
+                    return GetDay.getperiod(a.start_at) - GetDay.getperiod(b.start_at);
+                }),
+            );
         });
     };
 
@@ -102,14 +104,13 @@ const Calendar = () => {
 
     const [event, setEvent] = useState<EventType[]>([
         {
-            start_at: '2022-11-01',
-            end_at: '2022-11-04',
-            color: '3698FE',
-            title: '성심당 본점 asdasd',
-            content: '오늘은 새로 나온 아이디어로 빵을 뽑겠습니다.',
+            start_at: '',
+            end_at: '',
+            title: '',
+            id: '',
             spot: {
-                id: '8f886d50-70ff-11ea-b498-02dd0a2dce82',
-                name: '성심당 은행점',
+                id: '',
+                name: '',
             },
         },
     ]);
@@ -118,27 +119,14 @@ const Calendar = () => {
         <>
             <MainDiv>
                 <CalendarContainer>
-                    <hr />
-                    <Dates>
-                        <Slide onClick={() => setMonth(month - 1)} />
-                        <span>
-                            {GetDay.getYear(month, YEAR)}년 {GetDay.getMonth(month)}월
-                        </span>
-                        <Slide
-                            onClick={() => setMonth(month + 1)}
-                            style={{ transform: 'scale(-1, 1)' }}
-                        />
-                    </Dates>
-                    <hr />
-                    <Week>
-                        {week.map((elm: string, i: number) =>
-                            i === 0 || i === 6 ? (
-                                <div style={{ color: '#e84045' }}>{elm}</div>
-                            ) : (
-                                <div>{elm}</div>
-                            ),
-                        )}
-                    </Week>
+                    <Dates
+                        month={{
+                            state: month,
+                            setState: setMonth,
+                        }}
+                        year={YEAR}
+                    />
+                    <Week week={week} />
                     <Days>
                         {date.map((elm: number, i: number) => (
                             <>
@@ -147,7 +135,7 @@ const Calendar = () => {
                                     <>
                                         <Day color={'#505050'}>
                                             <hr />
-                                            <>{`${elm}`.padStart(2, '0')}</>
+                                            <span>{`${elm}`.padStart(2, '0')}</span>
                                             {showCalendar(
                                                 elm,
                                                 i,
@@ -170,13 +158,22 @@ const Calendar = () => {
                         ))}
                     </Days>
                 </CalendarContainer>
-                <ScheduleContainer>{Schedule(event)}</ScheduleContainer>
+                <ScheduleContainer>{Schedule(event, getEvent)}</ScheduleContainer>
             </MainDiv>
         </>
     );
 };
 
 export default Calendar;
+
+const FadeInMainDiv = keyframes`
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+`;
 
 const MainDiv = styled.div`
     height: calc(100vh - 60px);
@@ -189,17 +186,6 @@ const MainDiv = styled.div`
     }
 `;
 
-const Dates = styled.div`
-    width: 100%;
-    height: 60px;
-    display: inline-flex;
-    justify-content: space-between;
-    padding: 0px 14px;
-    align-items: center;
-    font-size: 18px;
-    font-weight: bold;
-`;
-
 const CalendarContainer = styled.div`
     width: 980px;
     height: 802px;
@@ -207,24 +193,6 @@ const CalendarContainer = styled.div`
         height: 1px;
         background-color: rgba(0, 0, 0, 0.3);
         border: none;
-    }
-`;
-
-const Slide = styled.div`
-    cursor: pointer;
-    width: 12.35px;
-    height: 20px;
-    background-image: url("data:image/svg+xml,%3Csvg width='13' height='21' viewBox='0 0 13 21' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.3997 18.25L4.76632 10.6L12.3997 2.94998L10.0497 0.599976L0.0496578 10.6L10.0497 20.6L12.3997 18.25Z' fill='%237C7C7C'/%3E%3C/svg%3E%0A");
-`;
-
-const Week = styled.div`
-    width: 100%;
-    display: inline-flex;
-    font-size: 18px;
-    div {
-        width: 140px;
-        height: 70px;
-        padding: 10px 15px;
     }
 `;
 
@@ -248,6 +216,10 @@ const Day = styled.div<{ color?: string }>`
         background-color: ${(props) => props.color || '#505050'};
         margin-top: -15px;
         margin-bottom: 10px;
+        + span {
+            position: static;
+            color: ${(props) => props.color || '#505050'};
+        }
     }
 
     > div {
@@ -266,8 +238,6 @@ const Day = styled.div<{ color?: string }>`
         text-overflow: ellipsis;
         line-height: 21px;
         padding: 6px 15px;
-        /* z-index: 2; */
-        /* white-space: nowrap; */
     }
 
     > span {
@@ -281,7 +251,8 @@ const Day = styled.div<{ color?: string }>`
 `;
 
 const ScheduleContainer = styled.div`
-    width: 550px;
+    /* animation: ${FadeInMainDiv} 1s ease-in-out; */
+    width: 520px;
     height: 802px;
     margin-left: 50px;
     border-radius: 5px;
@@ -300,12 +271,5 @@ const ScheduleContainer = styled.div`
         font-size: 16px;
         outline: none;
         transition: 0.2s ease-in-out;
-
-        &:hover {
-            transform: translateY(10%);
-        }
-        &:active {
-            transform: translateY(20%);
-        }
     }
 `;
