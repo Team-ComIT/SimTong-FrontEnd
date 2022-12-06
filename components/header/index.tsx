@@ -27,41 +27,44 @@ const Header = () => {
 
     const login = useAppSelector((state) => state.login.loggedIn);
 
-    return (
-        <>
-            <MainDiv>
-                {isModal && <LoginModal showModal={showModal} />}
-                <LogoBox>
+    if (window.location.pathname != '/find-number') {
+        return (
+            <>
+                <MainDiv>
+                    {isModal && <LoginModal showModal={showModal} />}{' '}
                     <Link href="/">
-                        <Logo />
+                        <LogoBox>
+                            <Logo />
+                        </LogoBox>
                     </Link>
-                </LogoBox>
-                <Nav>
-                    {nav.map((item: navType, index: number) => (
-                        <Link href={item.link} key={index}>
-                            <span>{item.name}</span>
-                        </Link>
-                    ))}
-                </Nav>
-                <Profile>
-                    {login ? (
-                        <>
-                            <ProfileImage>
-                                <Image
-                                    src={require('../../public/profile.png')}
-                                    width="30px"
-                                    height="30px"
-                                />
-                            </ProfileImage>
-                            <LogOut>로그아웃</LogOut>
-                        </>
-                    ) : (
-                        <LoginBtn onClick={showModal}>로그인</LoginBtn>
-                    )}
-                </Profile>
-            </MainDiv>
-        </>
-    );
+                    <Nav>
+                        {nav.map((item: navType, index: number) => (
+                            <Link href={item.link} key={index}>
+                                <span>{item.name}</span>
+                            </Link>
+                        ))}
+                    </Nav>
+                    <Profile>
+                        {login ? (
+                            <>
+                                <ProfileImage>
+                                    <Image
+                                        src={require('../../public/profile.png')}
+                                        width="30px"
+                                        height="30px"
+                                    />
+                                </ProfileImage>
+
+                                <LogOut>로그아웃</LogOut>
+                            </>
+                        ) : (
+                            <LoginBtn onClick={showModal}>로그인</LoginBtn>
+                        )}
+                    </Profile>
+                </MainDiv>
+            </>
+        );
+    }
 };
 
 export default Header;

@@ -21,6 +21,7 @@ const LoginModal = ({ showModal }: propsType) => {
         onSuccess: (data) => {
             localStorage.setItem('access_token', data.access_token);
             localStorage.setItem('refresh_token', data.refresh_token);
+            location.reload();
             showModal();
         },
         onError: () => {
@@ -41,6 +42,11 @@ const LoginModal = ({ showModal }: propsType) => {
         } else {
             alert('정보를 입력해주세요');
         }
+    };
+
+    const onClickFindNumber = () => {
+        router.push('/find-number');
+        showModal();
     };
 
     const changeLoginState = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,7 +85,7 @@ const LoginModal = ({ showModal }: propsType) => {
                     <button onClick={onLogin}>로그인</button>
                     <_SearhEmployeeNumberText>
                         사원번호를 잊으셨다면?{' '}
-                        <span onClick={() => router.push('/find-number')}>사원번호 찾기</span>
+                        <span onClick={onClickFindNumber}>사원번호 찾기</span>
                     </_SearhEmployeeNumberText>
                 </_LoginLayout>
             </OutSideClickHandler>
