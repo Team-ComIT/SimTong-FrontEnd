@@ -79,7 +79,7 @@ export const ScheduleSetting = ({ setting, create, initial, getEvent }: Schedule
                 method: 'PUT',
                 url: BASE_URL + `/schedules/spots/${initial.state.id}`,
                 headers: {
-                    Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+                    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                 },
                 data: {
                     title: schedule.title,
@@ -95,7 +95,7 @@ export const ScheduleSetting = ({ setting, create, initial, getEvent }: Schedule
                 method: 'POST',
                 url: BASE_URL + `/schedules/spots/${schedule.id}`,
                 headers: {
-                    Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+                    Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                 },
                 data: {
                     title: schedule.title,

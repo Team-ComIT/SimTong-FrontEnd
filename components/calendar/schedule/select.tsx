@@ -17,9 +17,10 @@ const SelectComplete = ({ func }: { func: (value: string, props: string) => void
             method: 'GET',
             url: BASE_URL + '/commons/spot',
             headers: {
-                Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
             },
         }).then((res) => {
+            console.log(res)
             setArr(res.data.spot_list);
         });
     }, []);

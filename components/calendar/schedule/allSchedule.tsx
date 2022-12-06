@@ -32,7 +32,7 @@ export const AllSchedule = ({ setting, create, initial, getEvent, event }: AllSc
             method: 'DELETE',
             url: BASE_URL + `/schedules/spots/${hover}`,
             headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
             },
         }).then(() => {
             getEvent();
