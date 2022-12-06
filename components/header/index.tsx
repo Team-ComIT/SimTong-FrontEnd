@@ -21,14 +21,20 @@ const Header = () => {
         { name: '캘린더', link: '/calender' },
     ];
 
+    const showModal = () => {
+        setIsModal(!isModal);
+    };
+
     const login = useAppSelector((state) => state.login.loggedIn);
 
     return (
         <>
             <MainDiv>
-                {isModal && <LoginModal setIsModal={setIsModal} />}
+                {isModal && <LoginModal showModal={showModal} />}
                 <LogoBox>
-                    <Logo />
+                    <Link href="/">
+                        <Logo />
+                    </Link>
                 </LogoBox>
                 <Nav>
                     {nav.map((item: navType, index: number) => (
@@ -51,7 +57,7 @@ const Header = () => {
                             <LogOut>로그아웃</LogOut>
                         </>
                     ) : (
-                        <LoginBtn>로그인</LoginBtn>
+                        <LoginBtn onClick={showModal}>로그인</LoginBtn>
                     )}
                 </Profile>
             </MainDiv>
@@ -109,6 +115,7 @@ const LogOut = styled.span`
 `;
 
 const LoginBtn = styled.button`
+    cursor: pointer;
     width: 92px;
     height: 42px;
     background: none;
@@ -116,9 +123,15 @@ const LoginBtn = styled.button`
     color: #e84045;
     font-size: 16px;
     border-radius: 5px;
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    color: #e84045;
 `;
 
 const LogoBox = styled.div`
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 10px;

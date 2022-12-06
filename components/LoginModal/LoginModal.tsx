@@ -7,10 +7,10 @@ import styled from '@emotion/styled';
 import OutSideClickHandler from 'react-outside-click-handler';
 
 interface propsType {
-    setIsModal: Dispatch<SetStateAction<boolean>>;
+    showModal: () => void;
 }
 
-const LoginModal = ({ setIsModal }: propsType) => {
+const LoginModal = ({ showModal }: propsType) => {
     const router = useRouter();
     const [loginInfo, setLoginInfo] = useState<loginInfoType>({
         employee_number: '',
@@ -53,7 +53,7 @@ const LoginModal = ({ setIsModal }: propsType) => {
 
     return (
         <_ModalBackground>
-            <OutSideClickHandler onOutsideClick={() => setIsModal(false)}>
+            <OutSideClickHandler onOutsideClick={showModal}>
                 <_LoginLayout>
                     <h1>LOGIN</h1>
                     <_LoginLine />
