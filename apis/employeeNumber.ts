@@ -7,7 +7,7 @@ export const getEmployeeNumber = (params: findInfoType, then: (res: AxiosRespons
             params: {
                 email: params.email,
                 name: params.name,
-                spotId: params.workSpace,
+                spotId: params.workspace,
             },
         })
         .then(then)
