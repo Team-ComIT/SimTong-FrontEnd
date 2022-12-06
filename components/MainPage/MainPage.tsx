@@ -94,7 +94,7 @@ const _PageLayout = styled.div`
     align-items: center;
     width: 100vw;
     overflow: hidden;
-    height: 100vh;
+    height: 100%;
 `;
 
 const _TextLayout = styled.div`

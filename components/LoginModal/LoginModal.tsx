@@ -1,6 +1,6 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/router';
-import { loginInfoType, responseType } from '../../types/authType';
+import { loginInfoType } from '../../types/authType';
 import { postLogin } from '../../apis/auth';
 import { useMutation } from 'react-query';
 import styled from '@emotion/styled';
@@ -16,10 +16,12 @@ const LoginModal = ({ showModal }: propsType) => {
         employee_number: '',
         password: '',
     });
+
     const { mutate } = useMutation(postLogin, {
-        onSuccess: (data: responseType) => {
+        onSuccess: (data) => {
             localStorage.setItem('access_token', data.access_token);
             localStorage.setItem('refresh_token', data.refresh_token);
+            showModal();
         },
         onError: () => {
             alert('로그인에 실패했습니다');
