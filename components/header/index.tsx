@@ -1,27 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
 // import Profile from '../../assets/svgs/Profile.svg';
 import { useRouter } from 'next/router';
+import { nav } from './constant';
 import Logo from '../../assets/svgs/Logo';
 import LoginModal from '../LoginModal/LoginModal';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useAppSelector } from '../../hook/hooks';
 
-interface navType {
-    name: string;
-    link: string;
+interface NavProps {
+    current: boolean;
 }
 
 const Header = () => {
     const router = useRouter();
     const [isModal, setIsModal] = useState<boolean>(false);
-    const nav: navType[] = [
-        { name: '휴무표', link: '/' },
-        { name: '사원관리', link: '/' },
-        { name: '캘린더', link: '/calender' },
-    ];
+    const [selectPage, setSelectPage] = useState<string>('');
 
     const showModal = () => {
         setIsModal(!isModal);
@@ -42,13 +38,13 @@ const Header = () => {
                         <Logo />
                     </LogoBox>
                 </Link>
-                <Nav>
-                    {nav.map((item: navType, index: number) => (
+                <NavList>
+                    {nav.map((item, index: number) => (
                         <Link href={item.link} key={index}>
-                            <span>{item.name}</span>
+                            <Nav current={item.link == router.pathname}>{item.name}</Nav>
                         </Link>
                     ))}
-                </Nav>
+                </NavList>
                 <Profile>
                     {login ? (
                         <>
@@ -59,7 +55,6 @@ const Header = () => {
                                     height="30px"
                                 />
                             </ProfileImage>
-
                             <LogOut>로그아웃</LogOut>
                         </>
                     ) : (
@@ -83,24 +78,24 @@ const MainDiv = styled.div`
     border-bottom: 1px solid #ededed;
 `;
 
-const Nav = styled.div`
+const NavList = styled.div`
     height: 23px;
     gap: 100px;
     display: inline-flex;
     justify-content: space-between;
+`;
 
-    span {
-        transition: all 0.2s;
-        cursor: pointer;
-        font-family: 'Pretendard';
-        font-weight: 400;
-        font-size: 18px;
-        color: #242424;
+const Nav = styled.span<NavProps>`
+    transition: all 0.2s;
+    cursor: pointer;
+    font-family: 'Pretendard';
+    font-weight: ${(props) => (props.current ? 600 : 400)};
+    font-size: 18px;
+    color: ${(props) => (props.current ? '#e84045' : '#242424')};
 
-        &:hover {
-            font-weight: 600;
-            color: #e84045;
-        }
+    &:hover {
+        font-weight: 600;
+        color: #e84045;
     }
 `;
 

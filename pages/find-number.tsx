@@ -34,7 +34,6 @@ const FindEmployeeNumberPage = () => {
     };
 
     const setWorkspace = (uuid: string) => {
-        console.log(uuid);
         setFindInfo({ ...findInfo, workspace: uuid });
     };
 
