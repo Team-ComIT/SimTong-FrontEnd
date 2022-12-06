@@ -4,7 +4,7 @@ import axios from 'axios';
 import { showCalendar } from './calendar';
 import * as GetDay from './func';
 import { EventType, ModalType } from './type';
-// import { showHolyday } from './holyday';
+import { showHolyday } from './holyday';
 import { Schedule } from './schedule';
 import Week from './week';
 import Dates from './dates';
@@ -59,10 +59,10 @@ const Calendar = () => {
             url: 'http://3.39.162.197:8888/schedules/spots',
             method: 'GET',
             params: {
-                date: `${TODAY}`,
+                date: `${GetDay.getYear(month, YEAR)}-${GetDay.getMonth(month)}-01`,
             },
             headers: {
-                Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
             },
         }).then((res) => {
             console.log(res);
@@ -251,7 +251,7 @@ const Day = styled.div<{ color?: string }>`
 `;
 
 const ScheduleContainer = styled.div`
-    /* animation: ${FadeInMainDiv} 1s ease-in-out; */
+    animation: ${FadeInMainDiv} 1s ease-in-out;
     width: 520px;
     height: 802px;
     margin-left: 50px;
