@@ -16,13 +16,26 @@ interface NavProps {
 
 const Header = () => {
     const router = useRouter();
+    const [isLogin, setIsLogin] = useState<boolean>(false);
     const [isModal, setIsModal] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (localStorage.getItem('access_token')) {
+            setIsLogin(true);
+        }
+    }, []);
 
     const showModal = () => {
         setIsModal(!isModal);
     };
 
     const login = useAppSelector((state) => state.login.loggedIn);
+
+    const onClickLogout = () => {
+        setIsLogin(false);
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+    };
 
     if (router.pathname == '/find-number') {
         return <div></div>;
@@ -45,7 +58,7 @@ const Header = () => {
                     ))}
                 </NavList>
                 <Profile>
-                    {login ? (
+                    {isLogin ? (
                         <>
                             <ProfileImage>
                                 <Image
@@ -54,7 +67,7 @@ const Header = () => {
                                     height="30px"
                                 />
                             </ProfileImage>
-                            <LogOut>로그아웃</LogOut>
+                            <LogOut onClick={onClickLogout}>로그아웃</LogOut>
                         </>
                     ) : (
                         <LoginBtn onClick={showModal}>로그인</LoginBtn>
@@ -108,9 +121,11 @@ const ProfileImage = styled.div`
 `;
 
 const LogOut = styled.span`
-    font-size: 20px;
+    cursor: pointer;
+    font-size: 18px;
     color: #e84045;
-    margin-left: 15px;
+    margin: 0px;
+    margin-left: 10px;
     font-weight: bold;
 `;
 
