@@ -128,8 +128,8 @@ export const ScheduleSetting = ({ setting, create, initial, getEvent }: Schedule
                     )}
                 </div>
                 <ScheduleContainer>
-                    {showSchedule.map((item) => (
-                        <ScheduleInput width={item.width}>
+                    {showSchedule.map((item,i) => (
+                        <ScheduleInput key={i} width={item.width}>
                             <div>{item.title}</div>
                             {item.input}
                         </ScheduleInput>

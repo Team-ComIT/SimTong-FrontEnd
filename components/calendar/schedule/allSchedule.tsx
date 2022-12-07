@@ -72,6 +72,7 @@ export const AllSchedule = ({ setting, create, initial, getEvent, event }: AllSc
                     <ScheduleList>
                         {event.map((elm: EventType, i: number) => (
                             <div
+                                key={i}
                                 onClick={() => {
                                     setting.setState(!setting.state);
                                     settingInitial(elm);

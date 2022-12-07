@@ -33,8 +33,9 @@ const SelectComplete = ({ func }: { func: (value: string, props: string) => void
                 value={name}
             />
             <DataList state={show}>
-                {arr.map((spot: SpotType) => (
+                {arr.map((spot: SpotType, i) => (
                     <div
+                        key={i}
                         onClick={() => {
                             func(spot.id, 'id');
                             setName(spot.name);
