@@ -2,7 +2,6 @@ import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import axios from 'axios';
 import React, { useState } from 'react';
-import { BASE_URL } from '../../../data';
 import { TODAY } from '../data';
 import { ScheduleSettingType, ScheduleType } from '../type';
 import SelectComplete from './select';
@@ -77,7 +76,7 @@ export const ScheduleSetting = ({ setting, create, initial, getEvent }: Schedule
         if (setting.state) {
             axios({
                 method: 'PUT',
-                url: BASE_URL + `/schedules/spots/${initial.state.id}`,
+                url: `http://3.39.162.197:8888/schedules/spots/${initial.state.id}`,
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                 },
@@ -93,7 +92,7 @@ export const ScheduleSetting = ({ setting, create, initial, getEvent }: Schedule
         } else {
             axios({
                 method: 'POST',
-                url: BASE_URL + `/schedules/spots/${schedule.id}`,
+                url: `http://3.39.162.197:8888/schedules/spots/${schedule.id}`,
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('access_token')}`,
                 },

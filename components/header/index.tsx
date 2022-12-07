@@ -17,7 +17,6 @@ interface NavProps {
 const Header = () => {
     const router = useRouter();
     const [isModal, setIsModal] = useState<boolean>(false);
-    const [selectPage, setSelectPage] = useState<string>('');
 
     const showModal = () => {
         setIsModal(!isModal);

@@ -2,7 +2,6 @@ import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import axios from 'axios';
 import React, { useState } from 'react';
-import { BASE_URL } from '../../../data';
 import { TODAY } from '../data';
 import { AllScheduleType, EventType } from '../type';
 
@@ -30,7 +29,7 @@ export const AllSchedule = ({ setting, create, initial, getEvent, event }: AllSc
     const deleteSchedule = () => {
         axios({
             method: 'DELETE',
-            url: BASE_URL + `/schedules/spots/${hover}`,
+            url: `http://3.39.162.197:8888/schedules/spots/${hover}`,
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
             },

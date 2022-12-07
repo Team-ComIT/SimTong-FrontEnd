@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import axios from 'axios';
-import { showCalendar } from './calendar';
-import * as GetDay from './func';
-import { EventType, ModalType } from './type';
-import { showHolyday } from './holyday';
-import { Schedule } from './schedule';
-import Week from './week';
-import Dates from './dates';
+import { showCalendar } from '../components/calendar/calendar';
+import * as GetDay from '../components/calendar/func';
+import { EventType, ModalType } from '../components/calendar/type';
+import { showHolyday } from '../components/calendar/holyday';
+import { Schedule } from '../components/calendar/schedule';
+import Week from '../components/calendar/week';
+import Dates from '../components/calendar/dates';
 import { keyframes } from '@emotion/react';
-import { TODAY } from './data';
+import { TODAY } from '../components/calendar/data';
 
 const Calendar = () => {
     let DATE: Date = new Date();

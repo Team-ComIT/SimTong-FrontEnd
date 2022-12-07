@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { BASE_URL } from '../../../data';
 import { SpotType } from '../type';
 const SelectComplete = ({ func }: { func: (value: string, props: string) => void }) => {
     const [show, setShow] = useState<boolean>(false);
@@ -15,7 +14,7 @@ const SelectComplete = ({ func }: { func: (value: string, props: string) => void
     useEffect(() => {
         axios({
             method: 'GET',
-            url: BASE_URL + '/commons/spot',
+            url: 'http://3.39.162.197:8888/commons/spot',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
             },
