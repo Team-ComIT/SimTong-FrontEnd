@@ -12,7 +12,7 @@ export const getEmployeeNumber = (params: findInfoType, then: (res: AxiosRespons
         })
         .then(then)
         .catch((res) => {
-            console.log(res);
+            alert('정보가 잘못되었습니다');
         });
 };
 

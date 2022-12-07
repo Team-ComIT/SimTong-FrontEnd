@@ -115,53 +115,56 @@ const Calendar = () => {
         },
     ]);
 
-    return (
-        <>
-            <MainDiv>
-                <CalendarContainer>
-                    <Dates
-                        month={{
-                            state: month,
-                            setState: setMonth,
-                        }}
-                        year={YEAR}
-                    />
-                    <Week week={week} />
-                    <Days>
-                        {date.map((elm: number, i: number) => (
-                            <>
-                                {i >= date.indexOf(1) &&
-                                i <= date.indexOf(GetDay.getLastDay(month, YEAR), 28) ? (
-                                    <>
-                                        <Day color={'#505050'}>
+    if (typeof window !== 'undefined' && localStorage.getItem('access_token')) {
+        return (
+            <>
+                <MainDiv>
+                    <CalendarContainer>
+                        <Dates
+                            month={{
+                                state: month,
+                                setState: setMonth,
+                            }}
+                            year={YEAR}
+                        />
+                        <Week week={week} />
+                        <Days>
+                            {date.map((elm: number, i: number) => (
+                                <>
+                                    {i >= date.indexOf(1) &&
+                                    i <= date.indexOf(GetDay.getLastDay(month, YEAR), 28) ? (
+                                        <>
+                                            <Day color={'#505050'}>
+                                                <hr />
+                                                <span>{`${elm}`.padStart(2, '0')}</span>
+                                                {showCalendar(
+                                                    elm,
+                                                    i,
+                                                    month,
+                                                    YEAR,
+                                                    modal,
+                                                    setModal,
+                                                    event,
+                                                )}
+                                                {/* {showHolyday(elm, month, YEAR)} */}
+                                            </Day>
+                                        </>
+                                    ) : (
+                                        <Day color={'#ffc9cb'}>
                                             <hr />
                                             <span>{`${elm}`.padStart(2, '0')}</span>
-                                            {showCalendar(
-                                                elm,
-                                                i,
-                                                month,
-                                                YEAR,
-                                                modal,
-                                                setModal,
-                                                event,
-                                            )}
-                                            {/* {showHolyday(elm, month, YEAR)} */}
                                         </Day>
-                                    </>
-                                ) : (
-                                    <Day color={'#ffc9cb'}>
-                                        <hr />
-                                        <span>{`${elm}`.padStart(2, '0')}</span>
-                                    </Day>
-                                )}
-                            </>
-                        ))}
-                    </Days>
-                </CalendarContainer>
-                <ScheduleContainer>{Schedule(event, getEvent)}</ScheduleContainer>
-            </MainDiv>
-        </>
-    );
+                                    )}
+                                </>
+                            ))}
+                        </Days>
+                    </CalendarContainer>
+                    <ScheduleContainer>{Schedule(event, getEvent)}</ScheduleContainer>
+                </MainDiv>
+            </>
+        );
+    }
+    return <div />;
 };
 
 export default Calendar;

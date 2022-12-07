@@ -32,10 +32,11 @@ const Header = () => {
     // const login = useAppSelector((state) => state.login.loggedIn);
 
     const onClickLogout = () => {
-        router.reload();
         setIsLogin(false);
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
+        router.push('/');
+        router.reload();
     };
 
     if (router.pathname == '/find-number') {
