@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { menuType } from '../../types/menuType';
 import useToDay from '../../hooks/useToDay';
 import { instance } from '../../apis/instance';
-import SimTongApp from '../../assets/imgs/SImTongApp.png';
+import SimTongApp from '../../assets/imgs/SimTongApp.png';
 import MealArrow from '../../assets/svgs/MealArrow';
 import styled from '@emotion/styled';
 
