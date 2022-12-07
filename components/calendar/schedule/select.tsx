@@ -19,7 +19,6 @@ const SelectComplete = ({ func }: { func: (value: string, props: string) => void
                 Authorization: `Bearer ${localStorage.getItem('access_token')}`,
             },
         }).then((res) => {
-            console.log(res)
             setArr(res.data.spot_list);
         });
     }, []);
@@ -65,6 +64,7 @@ const DataList = styled.div<{ state: boolean }>`
         padding-left: 15px;
         font-size: 14px;
     }
+
     div:hover {
         background-color: #ededed;
     }

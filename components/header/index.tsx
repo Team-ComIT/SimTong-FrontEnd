@@ -29,9 +29,10 @@ const Header = () => {
         setIsModal(!isModal);
     };
 
-    const login = useAppSelector((state) => state.login.loggedIn);
+    // const login = useAppSelector((state) => state.login.loggedIn);
 
     const onClickLogout = () => {
+        router.reload();
         setIsLogin(false);
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
@@ -121,12 +122,16 @@ const ProfileImage = styled.div`
 `;
 
 const LogOut = styled.span`
+    transition: all 0.3s;
     cursor: pointer;
     font-size: 18px;
     color: #e84045;
     margin: 0px;
-    margin-left: 10px;
     font-weight: bold;
+
+    &:hover {
+        color: #ef666b;
+    }
 `;
 
 const LoginBtn = styled.button`

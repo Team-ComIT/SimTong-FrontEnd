@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Calendar from './calender';
 import MainPage from '../components/MainPage/MainPage';
 
 const Home: NextPage = () => {
