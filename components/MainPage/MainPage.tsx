@@ -33,14 +33,13 @@ const MainPage = () => {
         if (date == 1 || date == 30) {
             getMenu();
         }
-        console.log(date);
     }, [date]);
 
     const menuMap = menuList.map((item, index) => {
         if (item.date == toDay) {
             const menuArray = item.meal.split(',');
             return menuArray.map((item, index) => {
-                return <_MenuText key={index}>{item}</_MenuText>;
+                return <p key={index}>{item}</p>;
             });
         } else {
             return undefined;
@@ -76,7 +75,7 @@ const MainPage = () => {
                         {menuMap.filter((element) => element !== undefined).length != 0 ? (
                             menuMap
                         ) : (
-                            <_MenuText>메뉴가 없습니다</_MenuText>
+                            <p>메뉴가 없습니다</p>
                         )}
                     </_MenuLayout>
                 </_MealLayout>
@@ -174,14 +173,14 @@ const _MenuLayout = styled.div`
     flex-direction: column;
     align-items: flex-start;
     height: 200px;
-`;
 
-const _MenuText = styled.p`
-    font-family: 'NanumSquare';
-    font-weight: 700;
-    font-size: 18px;
-    color: #242424;
-    margin: 0px;
+    p {
+        font-family: 'NanumSquare';
+        font-weight: 700;
+        font-size: 18px;
+        color: #242424;
+        margin: 0px;
+    }
 `;
 
 export default MainPage;
