@@ -5,7 +5,7 @@ import { showCalendar } from '../components/calendar/calendar';
 import * as GetDay from '../components/calendar/func';
 import { EventType, ModalType } from '../components/calendar/type';
 import { showHolyday } from '../components/calendar/holyday';
-import { Schedule } from '../components/calendar/schedule';
+import { Schedule } from '../components/calendar/calendarSchedule';
 import Week from '../components/calendar/week';
 import Dates from '../components/calendar/dates';
 import { keyframes } from '@emotion/react';
@@ -60,7 +60,13 @@ const Calendar = () => {
                 url: 'http://3.39.162.197:8888/schedules/spots',
                 method: 'GET',
                 params: {
-                    date: `${GetDay.getYear(month, YEAR)}-${GetDay.getMonth(month)}-01`,
+                    start_at: `${GetDay.getYear(month, YEAR)}-${GetDay.getMonth(month)}-01`,
+                    end_at: `${GetDay.getYear(month, YEAR)}-${GetDay.getMonth(
+                        month,
+                    )}-${GetDay.getLastDay(
+                        parseInt(GetDay.getMonth(month)),
+                        GetDay.getYear(month, YEAR),
+                    )}`,
                 },
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('access_token')}`,
