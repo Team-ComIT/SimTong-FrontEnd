@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { getMonth } from '../func';
 import HolidayUndo from './back';
 import HolyDaySelect from '../select';
+import { BASE_URL } from '../../../data';
 
 const HolyDayShow = ({
   setStatus,
@@ -28,7 +29,7 @@ const HolyDayShow = ({
 
   useEffect(() => {
     axios({
-      url: 'http://3.39.162.197:8888/holidays/employee',
+      url: BASE_URL + '/holidays/employee',
       method: 'GET',
       params: {
         year: year,
