@@ -2,6 +2,7 @@ import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { BASE_URL } from '../../data';
 import { getMonth, getYear } from './func';
 import { SpotType } from './type';
 
@@ -74,7 +75,7 @@ const HolyDaySelect = ({
     else {
       axios({
         method: 'GET',
-        url: 'http://3.39.162.197:8888/commons/spot',
+        url: BASE_URL + '/commons/spot',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },

@@ -11,6 +11,7 @@ import Dates from '../components/calendar/dates';
 import { keyframes } from '@emotion/react';
 import { TODAY } from '../components/calendar/data';
 import HolyDaySchedule from '../components/calendar/holydaySchedule';
+import { BASE_URL } from '../data';
 
 const HolyDay = () => {
   let DATE: Date = new Date();
@@ -55,7 +56,7 @@ const HolyDay = () => {
   const getEvent = () => {
     if (localStorage.getItem('access_token')) {
       axios({
-        url: 'http://3.39.162.197:8888/holidays/employee',
+        url: BASE_URL + '/holidays/employee',
         method: 'GET',
         params: {
           year: GetDay.getYear(month, YEAR),
@@ -111,51 +112,48 @@ const HolyDay = () => {
     },
   ]);
 
-  if (typeof window !== 'undefined' && localStorage.getItem('access_token')) {
-    return (
-      <>
-        <MainDiv>
-          <CalendarContainer>
-            <Dates
-              month={{
-                state: month,
-                setState: setMonth,
-              }}
-              year={YEAR}
-            />
-            <Week week={week} />
-            <Days>
-              {date.map((elm: number, i: number) => (
-                <>
-                  {i >= date.indexOf(1) && i <= date.indexOf(GetDay.getLastDay(month, YEAR), 28) ? (
-                    <>
-                      <Day color={'#505050'}>
-                        <hr />
-                        <span>{`${elm}`.padStart(2, '0')}</span>
-                        {showHolyday(elm, month, YEAR, event)}
-                      </Day>
-                    </>
-                  ) : (
-                    <Day color={'#ffc9cb'}>
+  return (
+    <>
+      <MainDiv>
+        <CalendarContainer>
+          <Dates
+            month={{
+              state: month,
+              setState: setMonth,
+            }}
+            year={YEAR}
+          />
+          <Week week={week} />
+          <Days>
+            {date.map((elm: number, i: number) => (
+              <>
+                {i >= date.indexOf(1) && i <= date.indexOf(GetDay.getLastDay(month, YEAR), 28) ? (
+                  <>
+                    <Day color={'#505050'}>
                       <hr />
                       <span>{`${elm}`.padStart(2, '0')}</span>
+                      {showHolyday(elm, month, YEAR, event)}
                     </Day>
-                  )}
-                </>
-              ))}
-            </Days>
-          </CalendarContainer>
-          <ScheduleContainer>
-            <HolyDaySchedule
-              month={{ state: month, setState: setMonth }}
-              year={GetDay.getYear(month, YEAR)}
-            />
-          </ScheduleContainer>
-        </MainDiv>
-      </>
-    );
-  }
-  return <div>로그인후 사용하실 수 있습니다.</div>;
+                  </>
+                ) : (
+                  <Day color={'#ffc9cb'}>
+                    <hr />
+                    <span>{`${elm}`.padStart(2, '0')}</span>
+                  </Day>
+                )}
+              </>
+            ))}
+          </Days>
+        </CalendarContainer>
+        <ScheduleContainer>
+          <HolyDaySchedule
+            month={{ state: month, setState: setMonth }}
+            year={GetDay.getYear(month, YEAR)}
+          />
+        </ScheduleContainer>
+      </MainDiv>
+    </>
+  );
 };
 
 export default HolyDay;
