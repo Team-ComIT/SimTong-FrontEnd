@@ -3,7 +3,7 @@ import { findInfoType } from '../types/findNumberType';
 
 export const getEmployeeNumber = (params: findInfoType, then: (res: AxiosResponse) => void) => {
     axios
-        .get('http://3.39.162.197:8888/commons/employee-number', {
+        .get('https://simtong-server.comit.or.kr/commons/employee-number', {
             params: {
                 email: params.email,
                 name: params.name,
@@ -17,5 +17,5 @@ export const getEmployeeNumber = (params: findInfoType, then: (res: AxiosRespons
 };
 
 export const getWorkspace = () => {
-    return axios.get('http://3.39.162.197:8888/commons/spot');
+    return axios.get('https://simtong-server.comit.or.kr/commons/spot');
 };
