@@ -68,7 +68,6 @@ const Calendar = () => {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
       }).then((res) => {
-        console.log(res);
         setEvent(
           res.data.schedules.sort(function (a: EventType, b: EventType) {
             return GetDay.getperiod(a.start_at) - GetDay.getperiod(b.start_at);
@@ -140,7 +139,6 @@ const Calendar = () => {
                       <hr />
                       <span>{`${elm}`.padStart(2, '0')}</span>
                       {showCalendar(elm, i, month, YEAR, modal, setModal, event)}
-                      {/* {showHolyday(elm, month, YEAR)} */}
                     </Day>
                   </>
                 ) : (
