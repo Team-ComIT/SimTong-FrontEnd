@@ -2,6 +2,7 @@ import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import axios from 'axios';
 import React, { useState } from 'react';
+import { BASE_URL } from '../../../data';
 import { TODAY } from '../data';
 import { getperiod } from '../func';
 import HolyDaySelect from '../select';
@@ -88,7 +89,7 @@ export const ScheduleSetting = ({ setting, create, initial, getEvent }: Schedule
     if (setting.state) {
       axios({
         method: 'PUT',
-        url: `http://3.39.162.197:8888/schedules/spots/${initial.state.id}`,
+        url: BASE_URL + `/schedules/spots/${initial.state.id}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
@@ -104,7 +105,7 @@ export const ScheduleSetting = ({ setting, create, initial, getEvent }: Schedule
     } else {
       axios({
         method: 'POST',
-        url: `http://3.39.162.197:8888/schedules/spots/${schedule.id}`,
+        url: BASE_URL + `/schedules/spots/${schedule.id}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
