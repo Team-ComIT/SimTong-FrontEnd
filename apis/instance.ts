@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 
 export const instance = axios.create({
-  baseURL: 'https://simtong-server.comit.or.kr/',
+  baseURL: 'https://simtong-server.comit.or.kr',
   timeout: 10000,
   headers: {
     Authorization: `Bearer ${
@@ -11,4 +11,4 @@ export const instance = axios.create({
   },
 });
 
-axios.defaults.baseURL = 'https://simtong-server.comit.or.kr/';
+axios.defaults.baseURL = 'https://simtong-server.comit.or.kr';
