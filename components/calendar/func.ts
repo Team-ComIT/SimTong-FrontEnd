@@ -1,5 +1,5 @@
-export const getperiod = (period: string) => {
-  return new Date(period).getTime();
+export const getperiod = (period?: string | null) => {
+  return period ? new Date(period).getTime() : new Date().getTime();
 };
 
 export const nowDate = (M: number, Y: number, elm: number) => {

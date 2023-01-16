@@ -90,7 +90,7 @@ const HolyDayShow = ({
             )}
           </>
         ) : (
-          <>쉬는 사람이 없습니다!</>
+          <NonePerson>쉬는 사람이 없습니다...</NonePerson>
         )}
       </HolidayContainer>
     </MainDiv>
@@ -98,6 +98,16 @@ const HolyDayShow = ({
 };
 
 export default HolyDayShow;
+
+const NonePerson = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 600;
+`;
 
 const Arrow = styled.div<{ scale: number }>`
   cursor: pointer;
